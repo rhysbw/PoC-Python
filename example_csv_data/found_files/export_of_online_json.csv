@@ -1,0 +1,16 @@
+Timeline,Start time,Duration,Row,Instance num,Pass Type,Player,Recipient,Half,Outcome
+BARvALAV,00.000,2.016,Deportivo Alavés,1,Kick Off,Jonathan Rodríguez Menéndez,Guillermo Alfonso Maripán Loaysa,Opposition Half,Complete
+BARvALAV,00.003,3.287,Deportivo Alavés,2,Regular Pass,Guillermo Alfonso Maripán Loaysa,Rubén Sobrino Pozuelo,Own Half,Incomplete
+BARvALAV,00.007,1.697,Barcelona,1,Recovery,Sergio Busquets i Burgos,Ivan Rakitić,Own Half,Complete
+BARvALAV,00.008,1.136,Barcelona,2,Regular Pass,Ivan Rakitić,Ousmane Dembélé,Own Half,Complete
+BARvALAV,00.010,0.758,Barcelona,3,Regular Pass,Ousmane Dembélé,Jordi Alba Ramos,Own Half,Complete
+BARvALAV,00.011,4.726,Barcelona,4,Regular Pass,Jordi Alba Ramos,,Own Half,Incomplete
+BARvALAV,00.025,4.153,Deportivo Alavés,3,Regular Pass,Víctor Laguardia Cisneros,,Own Half,Incomplete
+BARvALAV,00.030,1.301,Barcelona,5,Regular Pass,Marc-André ter Stegen,Gerard Piqué Bernabéu,Own Half,Complete
+BARvALAV,00.035,1.257,Barcelona,6,Regular Pass,Gerard Piqué Bernabéu,Nélson Cabral Semedo,Own Half,Complete
+BARvALAV,00.037,0.716,Barcelona,7,Regular Pass,Nélson Cabral Semedo,Sergi Roberto Carnicer,Own Half,Complete
+BARvALAV,00.038,0.924,Barcelona,8,Regular Pass,Sergi Roberto Carnicer,Nélson Cabral Semedo,Own Half,Complete
+BARvALAV,00.040,1.866,Barcelona,9,Regular Pass,Nélson Cabral Semedo,Samuel Yves Umtiti,Own Half,Complete
+BARvALAV,00.044,1.294,Barcelona,10,Regular Pass,Samuel Yves Umtiti,Jordi Alba Ramos,Own Half,Complete
+BARvALAV,00.046,0.672,Barcelona,11,Regular Pass,Jordi Alba Ramos,Ivan Rakitić,Own Half,Complete
+BARvALAV,00.049,3.166,Barcelona,12,Regular Pass,Ivan Rakitić,Gerard Piqué Bernabéu,Own Half,Complete
