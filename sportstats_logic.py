@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-SPORTSTATS‑Lite – Logic + CLI  (v0.4)
+SPORTSTATS-Lite - Logic + CLI  (v0.4)
 -------------------------------------
-• Two‑proportion z‑test  (--test prop)
-• Lag‑sequential χ² test (--test lag)
+• Two-proportion z-test  (--test prop)
+• Lag-sequential χ² test (--test lag)
 • YAML/JSON config, column mapping, filters
 """
 
@@ -11,7 +11,7 @@ from __future__ import annotations
 import argparse, json, logging, math, sys
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
-
+import numpy as np
 import pandas as pd
 from scipy.stats import chi2_contingency, norm  # NEW import for lag test & CI
 
@@ -112,7 +112,7 @@ def diff_ci(s1: int, n1: int, s2: int, n2: int, alpha: float) -> Tuple[float, fl
 def compute_lag_sequential(
     df: pd.DataFrame, group_col: str, metric_col: str, success_vals: List[str]
 ) -> Dict[str, Dict[str, float]]:
-    """χ² & Yule Q per group (lag 1)."""
+    """χ² & Yule Q per group (lag 1)."""
     res: Dict[str, Dict[str, float]] = {}
     for g, sub in df.groupby(group_col):
         seq = sub[metric_col].astype(str).isin(success_vals).to_numpy(dtype=int)
@@ -131,7 +131,7 @@ def compute_lag_sequential(
     return res
 
 
-def narrative(
+def prop_narrative(
     group_a: str,
     group_b: str,
     m1: Dict[str, int],
@@ -140,39 +140,213 @@ def narrative(
     p: float,
     alpha: float,
     ci: Tuple[float, float] | None,
-    metric_desc: str = "metric",
+    metric_desc: str,
+    hypothesis_txt: str | None = None,
 ) -> str:
     p1, p2 = m1["success"] / m1["total"], m2["success"] / m2["total"]
     diff_pct = (p1 - p2) * 100
+    decision = "Reject H₀" if p < alpha else "Fail to reject H₀"
+    lines = []
+
+    if hypothesis_txt:
+        lines.append(f"**Hypothesis:** {hypothesis_txt}")
+
     direction = "more" if diff_pct > 0 else "fewer"
     sig = "statistically **significant**" if p < alpha else "not statistically significant"
-    txt = (
-        f"{group_a} recorded {abs(diff_pct):.1f} pp {direction} {metric_desc} than {group_b}. "
-        f"The gap is {sig} (z = {z:.2f}, p = {p:.3f})."
+    
+    
+
+    lines.append(f"*Null H₀:* the proportion of {metric_desc} is equal in both groups.")
+    lines.append(f"**Decision:** {decision} (z = {z:.2f}, p = {p:.3f}, α = {alpha})")
+    lines.append(
+        f"Observed gap: {abs(diff_pct):.1f} pp "
+        f"({'higher' if diff_pct>0 else 'lower'} for {group_a})."
     )
+
+    lines.append(f"\n{group_a} recorded {abs(diff_pct):.1f} pp {direction} {metric_desc} than {group_b}. ")
     if ci:
         lo, hi = [x * 100 for x in ci]
-        txt += f"  {100*(1-alpha):.0f}% CI [{lo:+.1f}, {hi:+.1f}] pp."
-    return txt
+        lines.append(f"{100*(1-alpha):.0f}% CI for gap: [{lo:+.1f}, {hi:+.1f}] pp.")
+    return "\n".join(lines)
 
-def lag_narrative(team: str, stats: dict, alpha: float = 0.05) -> str:
+# Constants for effect-size thresholds
+Q_MODERATE = 0.3
+Q_STRONG = 0.5
+
+def lag_narrative(
+    team: str,
+    stats: Dict[str, float],
+    alpha: float = 0.05,
+    metric_desc: str | None = None,
+    df: int = 1,
+    q_thresholds: tuple[float, float] = (Q_MODERATE, Q_STRONG)
+) -> str:
     """
-    Build an English explanation for one team's lag‑sequential output.
+    Generate a Markdown narrative for a lag-sequential test result.
+
+    Parameters:
+    - team: Name of the team or event
+    - stats: dict with keys "chi2", "p", "yule_q"
+    - alpha: significance level for the χ² test
+    - metric_desc: human-readable name of the event being tested
+    - df: degrees of freedom for the χ² statistic
+    - q_thresholds: (moderate, strong) effect-size breakpoints for Yule's Q
+
+    Returns:
+    - A formatted Markdown string.
     """
     chi2, p, q = stats["chi2"], stats["p"], stats["yule_q"]
-    sig = "statistically significant" if p < alpha else "not statistically significant"
-    trend = (
-        "persistent (tendency to repeat the behaviour)"
-        if q > 0.3 else
-        "alternating (tendency to switch away)"
-        if q < -0.3 else
-        "independent (no meaningful carry‑over)"
-    )
+    desc = metric_desc or "the event"
+
+    # Decision based on p-value
+    reject = p < alpha
+    decision = "Reject H₀" if reject else "Fail to reject H₀"
+
+    # Format p-value neatly
+    if p < 0.001:
+        p_str = "< 0.001"
+    else:
+        p_str = f"= {p:.3f}"
+
+    # Only describe a trend if the test is significant
+    if not reject:
+        trend = "independent (no clear carry-over)"
+    else:
+        mod, strong = q_thresholds
+        if abs(q) >= strong:
+            strength = "strongly "
+        elif abs(q) >= mod:
+            strength = ""
+        else:
+            strength = "weakly "
+
+        if q > 0:
+            trend = f"{strength}persistent (event tends to repeat)"
+        else:
+            trend = f"{strength}alternating (event tends to switch away)"
+
     return (
-        f"**{team}** – χ² ={chi2:.2f}, p ={p:.3f}, Yule Q ={q:.2f} ➜ "
-        f"Association is {sig}; pattern appears **{trend}**."
+        f"**{team}** - χ²({df}) = {chi2:.2f}, p {p_str}, Yule's Q = {q:.2f}\n"
+        f"*Null H₀:* occurrence of {desc} is independent of the previous event.\n"
+        f"**Decision:** {decision}. Pattern appears **{trend}**."
     )
 
+def suggest_hypotheses(
+    df: pd.DataFrame,
+    *,
+    max_groups: int = 8,
+    max_suggestions: int = 5,
+    min_rows_per_group: int = 20,
+    include_lag: bool = True,
+) -> list[dict]:
+    """
+    Return up to *max_suggestions* ranked hypothesis dictionaries, skipping
+    trivial or self-referential pairs.
+    """
+    ideas: list[dict] = []
+
+    # 1. Candidate columns -------------------------------------------------
+    group_cols = [
+        c for c in df.columns
+        if df[c].dtype == "object" and 2 <= df[c].nunique(dropna=True) <= max_groups
+    ]
+
+    binary_cols: list[str] = []
+    for c in df.columns:
+        nunq = df[c].nunique(dropna=True)
+        if nunq == 2:
+            binary_cols.append(c)
+        elif nunq <= 4 and df[c].dtype == "object":
+            counts = df[c].value_counts(dropna=True)
+            if counts.iloc[0] / counts.sum() > 0.8:
+                binary_cols.append(c)
+
+    # 2. Pair evaluation ---------------------------------------------------
+    for gcol in group_cols:
+        grp_counts = df[gcol].value_counts(dropna=True)
+        if len(grp_counts) < 2:
+            continue
+        g1, g2 = grp_counts.index[:2]
+        n1, n2 = int(grp_counts[g1]), int(grp_counts[g2])
+        if min(n1, n2) < min_rows_per_group:
+            continue
+
+        for mcol in binary_cols:
+            # --- guard 0: skip comparing a column with itself -------------
+            if mcol == gcol:
+                continue
+
+            vals = df[mcol].dropna().unique().astype(str)
+            succ = [str(vals[0])]  # use first value as 'success'
+
+            # --- guard 1: skip if success is identical to group names -----
+            if succ[0] in (g1, g2):
+                continue
+
+            # ---------- proportion idea -----------------------------------
+            p1 = (df[df[gcol] == g1][mcol].astype(str).isin(succ)).mean()
+            p2 = (df[df[gcol] == g2][mcol].astype(str).isin(succ)).mean()
+            gap = abs(p1 - p2)
+
+            # --- guard 2: skip near-zero or near-100% gaps ----------------
+            if gap < 0.05 or gap > 0.95:
+                continue
+
+            prop_score = gap * np.sqrt(min(n1, n2))
+            ideas.append(
+                dict(
+                    test="prop",
+                    group_column=gcol,
+                    groups=[g1, g2],
+                    metric_column=mcol,
+                    success_vals=succ,
+                    score=prop_score,
+                    readable=(
+                        f"Compare how often **{g1}** vs **{g2}** record “{succ[0]}” in "
+                        f"**{mcol}** (current gap ≈ {gap*100:.1f} pp)."
+                    ),
+                )
+            )
+
+            # ---------- lag idea ------------------------------------------
+            if include_lag:
+                sub = df[df[gcol].isin([g1, g2])].sort_index()
+                seq = sub[mcol].astype(str).isin(succ).to_numpy(dtype=int)
+                if len(seq) < 3:
+                    continue
+                prev, curr = seq[:-1], seq[1:]
+                n11 = ((prev == 1) & (curr == 1)).sum()
+                n10 = ((prev == 1) & (curr == 0)).sum()
+                n01 = ((prev == 0) & (curr == 1)).sum()
+                n00 = ((prev == 0) & (curr == 0)).sum()
+                den = n11 * n00 + n10 * n01
+                if den == 0:
+                    continue
+                yq = (n11 * n00 - n10 * n01) / den
+                lag_score = abs(yq) * np.sqrt(n11 + n10 + n01 + n00 - 2)
+
+                # guard 2 reused: ignore trivial zero Q
+                if abs(yq) < 0.05:
+                    continue
+
+                ideas.append(
+                    dict(
+                        test="lag",
+                        group_column=gcol,
+                        groups=[g1, g2],
+                        metric_column=mcol,
+                        success_vals=succ,
+                        score=lag_score,
+                        readable=(
+                            f"See if “{succ[0]}” in **{mcol}** tends to repeat "
+                            f"back-to-back within **{g1}** or **{g2}** possessions."
+                        ),
+                    )
+                )
+
+    # 3. Rank & return -----------------------------------------------------
+    ideas.sort(key=lambda d: d["score"], reverse=True)
+    return ideas[:max_suggestions]
 
 
 # ---------- 4. Config + CLI --------------------------------------------
@@ -189,7 +363,7 @@ def load_config(path: Path | None) -> Dict[str, Any]:
 
 
 def make_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="Two‑proportion or Lag‑sequential test.")
+    p = argparse.ArgumentParser(description="Two-proportion or Lag-sequential test.")
     p.add_argument("--csv", required=True, type=Path)
     p.add_argument("--config", type=Path)
     p.add_argument("--test", choices=["prop", "lag"], default="prop")
@@ -217,7 +391,7 @@ def main(argv: List[str] | None = None) -> None:
 
     groups_str = get("groups")
     if not groups_str or "," not in groups_str:
-        logging.error("Provide two comma‑separated values via --groups or config.")
+        logging.error("Provide two comma-separated values via --groups or config.")
         sys.exit(1)
     group_a, group_b = [g.strip() for g in groups_str.split(",", 1)]
     alpha = float(get("alpha", 0.05))
@@ -230,12 +404,14 @@ def main(argv: List[str] | None = None) -> None:
                           met[group_b]["success"], met[group_b]["total"])
         ci = diff_ci(met[group_a]["success"], met[group_a]["total"],
                      met[group_b]["success"], met[group_b]["total"], alpha) if args.ci else None
-        print(narrative(group_a, group_b, met[group_a], met[group_b], z, p, alpha, ci,
+        print(prop_narrative(group_a, group_b, met[group_a], met[group_b], z, p, alpha, ci,
                         metric_desc=f"{metric_col}∈{success_vals}"))
     elif args.test == "lag":
         stats = compute_lag_sequential(df, group_col, metric_col, success_vals)
-        print(lag_narrative(group_a, stats[group_a], alpha))
-        print(lag_narrative(group_b, stats[group_b], alpha))
+        print(lag_narrative(group_a, stats[group_a], alpha,
+                            metric_desc=f"{metric_col} ∈ {success_vals}"))
+        print(lag_narrative(group_b, stats[group_b], alpha,
+                            metric_desc=f"{metric_col} ∈ {success_vals}"))
 
 
 
