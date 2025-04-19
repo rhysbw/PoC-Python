@@ -1,43 +1,27 @@
 #!/usr/bin/env python3
 """
-SPORTSTATS‑Lite / Logic + CLI
-========================================================
-Generic two‑proportion z‑test on any binary metric from a
-Sportscode CSV (or any tabular file).
-
-Key features
-------------
-• YAML/JSON config ( --config my_analysis.yml )  
-• Fully overridable via individual CLI flags  
-• Column mapping helper (if your CSV headers differ)  
-
-Public API  (importable by GUIs):
-    load_config
-    ColumnMapper, DEFAULT_MAPPING
-    parse_filter_string, apply_filters
-    compute_binary_metric, two_prop_z, diff_ci, narrative
+SPORTSTATS‑Lite – Logic + CLI  (v0.4)
+-------------------------------------
+• Two‑proportion z‑test  (--test prop)
+• Lag‑sequential χ² test (--test lag)
+• YAML/JSON config, column mapping, filters
 """
 
 from __future__ import annotations
-
-import argparse
-import json
-import logging
-import math
-import sys
+import argparse, json, logging, math, sys
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
 import pandas as pd
+from scipy.stats import chi2_contingency, norm  # NEW import for lag test & CI
 
 try:
-    import yaml  # type: ignore
+    import yaml  # optional
 except ModuleNotFoundError:
-    yaml = None  # YAML support optional
+    yaml = None
 
-# ------------------------------------------------------------------ #
-# 1. Column mapping
-# ------------------------------------------------------------------ #
+
+# ---------- 1. Column mapping ------------------------------------------
 DEFAULT_MAPPING: Dict[str, str] = {
     "team": "Row",
     "half": "Half",
@@ -51,33 +35,28 @@ class ColumnMapper:
 
     def __init__(self, mapping_path: Path | None):
         mapping: Dict[str, str] = DEFAULT_MAPPING.copy()
-
         if mapping_path:
             try:
+                txt = mapping_path.read_text()
                 if mapping_path.suffix.lower() in {".yml", ".yaml"}:
                     if yaml is None:
                         raise RuntimeError("pyyaml not installed.")
-                    mapping.update(yaml.safe_load(mapping_path.read_text()))
+                    mapping.update(yaml.safe_load(txt))
                 else:
-                    mapping.update(json.loads(mapping_path.read_text()))
+                    mapping.update(json.loads(txt))
             except Exception as exc:
                 logging.error("Failed to read mapping %s: %s", mapping_path, exc)
                 sys.exit(1)
-
-        missing = self.KEYS - mapping.keys()
-        if missing:
+        if missing := self.KEYS - mapping.keys():
             logging.error("Mapping file missing keys: %s", ", ".join(sorted(missing)))
             sys.exit(1)
-
         self._map = mapping
 
     def __getitem__(self, key: str) -> str:
         return self._map[key]
 
 
-# ------------------------------------------------------------------ #
-# 2. CSV loading & filtering
-# ------------------------------------------------------------------ #
+# ---------- 2. CSV + filters -------------------------------------------
 def load_csv(path: Path) -> pd.DataFrame:
     try:
         return pd.read_csv(path, encoding="utf-8")
@@ -88,11 +67,8 @@ def load_csv(path: Path) -> pd.DataFrame:
 def parse_filter_string(rule: str) -> Tuple[str, List[str]]:
     if "=" not in rule:
         raise ValueError("Filter must be COLUMN=value1|value2")
-    col, val_part = rule.split("=", 1)
-    values = [v.strip() for v in val_part.split("|") if v.strip()]
-    if not values:
-        raise ValueError("Filter needs at least one value")
-    return col.strip(), values
+    col, vals = rule.split("=", 1)
+    return col.strip(), [v.strip() for v in vals.split("|") if v.strip()]
 
 
 def apply_filters(df: pd.DataFrame, rules: List[Tuple[str, List[str]]]) -> pd.DataFrame:
@@ -102,21 +78,15 @@ def apply_filters(df: pd.DataFrame, rules: List[Tuple[str, List[str]]]) -> pd.Da
     return df[mask]
 
 
-# ------------------------------------------------------------------ #
-# 3. Metric + stats
-# ------------------------------------------------------------------ #
+# ---------- 3. Metrics & stats -----------------------------------------
 def compute_binary_metric(
     df: pd.DataFrame, group_col: str, metric_col: str, success_vals: List[str]
 ) -> Dict[str, Dict[str, int]]:
-    is_success = df[metric_col].astype(str).isin(success_vals)
+    ok = df[metric_col].astype(str).isin(success_vals)
     grp = df.groupby(group_col)
     return (
-        pd.DataFrame(
-            {
-                "total": grp.size(),
-                "success": grp.apply(lambda g: is_success.loc[g.index].sum()),
-            }
-        ).to_dict("index")
+        pd.DataFrame({"total": grp.size(), "success": grp.apply(lambda g: ok[g.index].sum())})
+        .to_dict("index")
     )
 
 
@@ -132,13 +102,33 @@ def two_prop_z(s1: int, n1: int, s2: int, n2: int) -> Tuple[float, float]:
 
 
 def diff_ci(s1: int, n1: int, s2: int, n2: int, alpha: float) -> Tuple[float, float]:
-    from scipy.stats import norm
-
     p1, p2 = s1 / n1, s2 / n2
     diff = p1 - p2
     se = math.sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)
     zcrit = norm.ppf(1 - alpha / 2)
     return diff - zcrit * se, diff + zcrit * se
+
+
+def compute_lag_sequential(
+    df: pd.DataFrame, group_col: str, metric_col: str, success_vals: List[str]
+) -> Dict[str, Dict[str, float]]:
+    """χ² & Yule Q per group (lag 1)."""
+    res: Dict[str, Dict[str, float]] = {}
+    for g, sub in df.groupby(group_col):
+        seq = sub[metric_col].astype(str).isin(success_vals).to_numpy(dtype=int)
+        if len(seq) < 2:
+            res[g] = dict(n11=0, n10=0, n01=0, n00=0, chi2=0, p=1, yule_q=0)
+            continue
+        prev, curr = seq[:-1], seq[1:]
+        n11 = int(((prev == 1) & (curr == 1)).sum())
+        n10 = int(((prev == 1) & (curr == 0)).sum())
+        n01 = int(((prev == 0) & (curr == 1)).sum())
+        n00 = int(((prev == 0) & (curr == 0)).sum())
+        chi2, p, _, _ = chi2_contingency([[n11, n10], [n01, n00]], correction=False)
+        denom = n11 * n00 + n10 * n01
+        yq = ((n11 * n00) - (n10 * n01)) / denom if denom else 0.0
+        res[g] = dict(n11=n11, n10=n10, n01=n01, n00=n00, chi2=chi2, p=p, yule_q=yq)
+    return res
 
 
 def narrative(
@@ -152,50 +142,60 @@ def narrative(
     ci: Tuple[float, float] | None,
     metric_desc: str = "metric",
 ) -> str:
-    p1 = m1["success"] / m1["total"]
-    p2 = m2["success"] / m2["total"]
-    diff_pc = (p1 - p2) * 100
-    direction = "more" if diff_pc > 0 else "fewer"
-    diff_abs = abs(diff_pc)
+    p1, p2 = m1["success"] / m1["total"], m2["success"] / m2["total"]
+    diff_pct = (p1 - p2) * 100
+    direction = "more" if diff_pct > 0 else "fewer"
     sig = "statistically **significant**" if p < alpha else "not statistically significant"
-
     txt = (
-        f"{group_a} recorded {diff_abs:.1f} percentage‑points {direction} {metric_desc} "
-        f"than {group_b}. This gap is {sig} (z = {z:.2f}, p = {p:.3f})."
+        f"{group_a} recorded {abs(diff_pct):.1f} pp {direction} {metric_desc} than {group_b}. "
+        f"The gap is {sig} (z = {z:.2f}, p = {p:.3f})."
     )
-    if ci is not None:
+    if ci:
         lo, hi = [x * 100 for x in ci]
-        txt += f"  {100*(1-alpha):.0f}% CI: [{lo:+.1f} pp, {hi:+.1f} pp]."
-    if min(m1['total'], m2['total']) < 30:
-        txt += " ⚠️ Small samples; interpret cautiously."
+        txt += f"  {100*(1-alpha):.0f}% CI [{lo:+.1f}, {hi:+.1f}] pp."
     return txt
 
+def lag_narrative(team: str, stats: dict, alpha: float = 0.05) -> str:
+    """
+    Build an English explanation for one team's lag‑sequential output.
+    """
+    chi2, p, q = stats["chi2"], stats["p"], stats["yule_q"]
+    sig = "statistically significant" if p < alpha else "not statistically significant"
+    trend = (
+        "persistent (tendency to repeat the behaviour)"
+        if q > 0.3 else
+        "alternating (tendency to switch away)"
+        if q < -0.3 else
+        "independent (no meaningful carry‑over)"
+    )
+    return (
+        f"**{team}** – χ² ={chi2:.2f}, p ={p:.3f}, Yule Q ={q:.2f} ➜ "
+        f"Association is {sig}; pattern appears **{trend}**."
+    )
 
-# ------------------------------------------------------------------ #
-# 4. Config + CLI
-# ------------------------------------------------------------------ #
+
+
+# ---------- 4. Config + CLI --------------------------------------------
 def load_config(path: Path | None) -> Dict[str, Any]:
     if path is None:
         return {}
+    txt = path.read_text()
     if path.suffix.lower() in {".yml", ".yaml"}:
         if yaml is None:
-            logging.error("YAML config requested but pyyaml not installed.")
+            logging.error("pyyaml required for YAML config.")
             sys.exit(1)
-        return yaml.safe_load(path.read_text())
-    return json.loads(path.read_text())
+        return yaml.safe_load(txt)
+    return json.loads(txt)
 
 
 def make_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="Generic two‑proportion z‑test.")
+    p = argparse.ArgumentParser(description="Two‑proportion or Lag‑sequential test.")
     p.add_argument("--csv", required=True, type=Path)
-    p.add_argument("--config", type=Path, help="YAML/JSON config file")
-
-    p.add_argument("--group-column")
-    p.add_argument("--groups")
-    p.add_argument("--metric-column")
-    p.add_argument("--metric-success")
+    p.add_argument("--config", type=Path)
+    p.add_argument("--test", choices=["prop", "lag"], default="prop")
+    p.add_argument("--group-column"), p.add_argument("--groups")
+    p.add_argument("--metric-column"), p.add_argument("--metric-success")
     p.add_argument("--filter", action="append", default=[])
-
     p.add_argument("--alpha", type=float)
     p.add_argument("--ci", action="store_true")
     p.add_argument("--map", type=Path)
@@ -208,37 +208,35 @@ def main(argv: List[str] | None = None) -> None:
     logging.basicConfig(level=args.log_level, format="%(levelname)s: %(message)s")
 
     cfg = load_config(args.config)
-    def cfg_or_flag(key: str, default=None):
-        return getattr(args, key) if getattr(args, key) not in (None, [], "") else cfg.get(key, default)
+    get = lambda k, d=None: (getattr(args, k) or cfg.get(k, d))
 
     mapper = ColumnMapper(args.map)
+    group_col = get("group_column", mapper["team"])
+    metric_col = get("metric_column", mapper["half"])
+    success_vals = [v.strip() for v in get("metric_success", "Opposition Half").split(",")]
 
-    group_col = cfg_or_flag("group_column", mapper["team"])
-    metric_col = cfg_or_flag("metric_column", mapper["half"])
-    success_vals = [v.strip() for v in cfg_or_flag("metric_success", "Opposition Half").split(",")]
-
-    groups = [g.strip() for g in cfg_or_flag("groups", "").split(",") if g.strip()]
-    if len(groups) != 2:
-        logging.error("Need exactly two group values via --groups or config.")
+    groups_str = get("groups")
+    if not groups_str or "," not in groups_str:
+        logging.error("Provide two comma‑separated values via --groups or config.")
         sys.exit(1)
-    group_a, group_b = groups
+    group_a, group_b = [g.strip() for g in groups_str.split(",", 1)]
+    alpha = float(get("alpha", 0.05))
 
-    alpha = float(cfg_or_flag("alpha", 0.05))
-    want_ci = bool(cfg_or_flag("ci", False))
+    df = apply_filters(load_csv(args.csv), [parse_filter_string(f) for f in args.filter])
 
-    df_raw = load_csv(args.csv)
-    df = apply_filters(df_raw, [parse_filter_string(f) for f in args.filter])
+    if args.test == "prop":
+        met = compute_binary_metric(df, group_col, metric_col, success_vals)
+        z, p = two_prop_z(met[group_a]["success"], met[group_a]["total"],
+                          met[group_b]["success"], met[group_b]["total"])
+        ci = diff_ci(met[group_a]["success"], met[group_a]["total"],
+                     met[group_b]["success"], met[group_b]["total"], alpha) if args.ci else None
+        print(narrative(group_a, group_b, met[group_a], met[group_b], z, p, alpha, ci,
+                        metric_desc=f"{metric_col}∈{success_vals}"))
+    elif args.test == "lag":
+        stats = compute_lag_sequential(df, group_col, metric_col, success_vals)
+        print(lag_narrative(group_a, stats[group_a], alpha))
+        print(lag_narrative(group_b, stats[group_b], alpha))
 
-    metrics = compute_binary_metric(df, group_col, metric_col, success_vals)
-    if {group_a, group_b} - metrics.keys():
-        logging.error("One or both groups not found after filtering.")
-        sys.exit(1)
-
-    m1, m2 = metrics[group_a], metrics[group_b]
-    z, p = two_prop_z(m1["success"], m1["total"], m2["success"], m2["total"])
-    ci = diff_ci(m1["success"], m1["total"], m2["success"], m2["total"], alpha) if want_ci else None
-
-    print(narrative(group_a, group_b, m1, m2, z, p, alpha, ci, metric_desc=metric_col))
 
 
 if __name__ == "__main__":

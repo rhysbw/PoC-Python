@@ -1,0 +1,11 @@
+# passes_lag.yml
+test: lag
+group_column: Row
+groups: ["Barcelona", "Deportivo Alavés"]
+
+metric_column: Half
+metric_success: "Opposition Half"
+
+filters:
+  - Outcome=Complete
+alpha: 0.05

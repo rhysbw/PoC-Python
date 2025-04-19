@@ -1,120 +1,97 @@
 """
-Streamlit GUI for SPORTSTATS‑Lite (generic, config‑aware)
-=========================================================
-Choose between:
-  • *Config mode* – upload a YAML/JSON config (same schema as CLI)
-  • *Manual mode* – pick group/metric/filters interactively
+Streamlit GUI for SPORTSTATS‑Lite (v0.4)
+----------------------------------------
+Upload CSV ▸ choose test ▸ see results.
+Config files now load from the uploaded buffer (no FileNotFoundError).
 """
 
 from __future__ import annotations
-
-import json
+import json, yaml
+from io import StringIO
 from pathlib import Path
 
 import pandas as pd
 import streamlit as st
-import yaml
 
 from sportstats_logic import (
-    apply_filters,
-    compute_binary_metric,
-    diff_ci,
-    load_config,
-    narrative,
-    parse_filter_string,
-    two_prop_z,
+    apply_filters, compute_binary_metric, compute_lag_sequential,
+    diff_ci, narrative, parse_filter_string, two_prop_z, lag_narrative
 )
 
 st.set_page_config(page_title="SPORTSTATS‑Lite", page_icon="⚽", layout="wide")
 st.title("⚽ SPORTSTATS‑Lite")
 
-# ------------------ Upload CSV ------------------
-csv_file = st.file_uploader("📄 Upload Sportscode CSV", type="csv")
-if csv_file is None:
-    st.info("Upload a CSV to begin.")
+# ---------------- Upload data ----------------
+csv_buf = st.file_uploader("CSV file", type="csv")
+if not csv_buf:
     st.stop()
+df_raw = pd.read_csv(csv_buf)
 
-df_raw = pd.read_csv(csv_file)
-
-# ------------------ Choose mode -----------------
-mode = st.radio("Analysis mode", ["Manual", "Config file"])
-cfg: dict = {}
+# ---------------- Mode selector --------------
+mode = st.radio("Mode", ["Manual", "Config file"])
+cfg = {}
 
 if mode == "Config file":
-    cfg_file = st.file_uploader("Upload YAML/JSON config", type=["yml", "yaml", "json"])
-    if cfg_file:
-        cfg = load_config(Path(cfg_file.name)).copy()  # type: ignore[arg-type]
-        st.success("Config loaded – settings locked.")
+    cfg_up = st.file_uploader("YAML/JSON config")
+    if not cfg_up:
+        st.stop()
+    text = cfg_up.read().decode("utf-8")
+    if cfg_up.name.lower().endswith((".yml", ".yaml")):
+        cfg = yaml.safe_load(text)
     else:
-        st.warning("Upload a config file or switch to Manual mode.")
-        st.stop()
+        cfg = json.loads(text)
 
-# ------------------ Resolve parameters ----------
+# ------------- Parameter resolution ----------
 if mode == "Manual":
-    group_col = st.selectbox("Grouping column. What we want to group py (Example: Your teams column)", df_raw.columns, index=0)
-    unique_groups = sorted(df_raw[group_col].dropna().astype(str).unique())
-    col1, col2 = st.columns(2)
-    group_a = col1.selectbox("Group A", unique_groups, index=0)
-    group_b = col2.selectbox("Group B", [g for g in unique_groups if g != group_a], index=0)
+    group_col = st.selectbox("Group column", df_raw.columns)
+    groups = sorted(df_raw[group_col].dropna().astype(str).unique())
+    group_a = st.selectbox("Group A", groups, 0)
+    group_b = st.selectbox("Group B", [g for g in groups if g != group_a], 0)
+    metric_col = st.selectbox("Metric column", df_raw.columns)
+    vals = sorted(df_raw[metric_col].dropna().astype(str).unique())
+    success_vals = st.multiselect("Success values", vals)
+    filters: list[tuple[str, list[str]]] = []
+    with st.expander("Filters"):
+        fcol = st.selectbox("Column", ["(none)"] + list(df_raw.columns))
+        if fcol != "(none)":
+            fvals = st.multiselect("Keep values", sorted(df_raw[fcol].unique()))
+            if fvals:
+                filters.append((fcol, fvals))
+    alpha = st.slider("α", 0.01, 0.10, 0.05, 0.005)
+    test_type = st.radio("Test", ["Proportion", "Lag‑sequential"])
+    show_ci = st.checkbox("Show CI (proportion only)", True)
+else:
+    group_col = cfg["group_column"]; group_a, group_b = cfg["groups"]
+    metric_col = cfg["metric_column"]
+    success_vals = cfg["metric_success"].split(",")
+    filters = [parse_filter_string(f) for f in cfg.get("filters", [])]
+    alpha = cfg.get("alpha", 0.05)
+    test_type = "Lag‑sequential" if cfg.get("test") == "lag" else "Proportion"
+    show_ci = cfg.get("ci", True)
 
-    metric_col = st.selectbox("Metric column. What we want to mesure (Example: Your Half Column)", df_raw.columns, index=0)
-    metric_vals = sorted(df_raw[metric_col].dropna().astype(str).unique())
-    success_vals = st.multiselect("Values that count as success (Example: Opposition Half)", metric_vals)
+if not success_vals:
+    st.warning("Select success values."); st.stop()
 
-    filter_rules = []
-    with st.expander("Optional include‑filters (Example: Pass Type and only include 'Regular Pass')"):
-        for i in range(3):
-            cols = st.selectbox(f"Filter {i+1} column", ["(none)"] + list(df_raw.columns), key=f"fcol{i}")
-            if cols != "(none)":
-                vals = sorted(df_raw[cols].dropna().astype(str).unique())
-                chosen = st.multiselect(f"{cols} ∈", vals, key=f"fval{i}")
-                if chosen:
-                    filter_rules.append((cols, chosen))
-
-    alpha = st.slider("Significance level α", 0.01, 0.10, 0.05, 0.005)
-    show_ci = st.checkbox("Show confidence interval", value=True)
-else:  # Config mode
-    try:
-        group_col = cfg["group_column"]
-        group_a, group_b = cfg["groups"]
-        metric_col = cfg["metric_column"]
-        success_vals = cfg["metric_success"].split(",") if isinstance(cfg["metric_success"], str) else list(cfg["metric_success"])
-        filter_rules = [parse_filter_string(f) for f in cfg.get("filters", [])]
-        alpha = cfg.get("alpha", 0.05)
-        show_ci = cfg.get("ci", True)
-    except KeyError as err:
-        st.error(f"Config missing key: {err}")
-        st.stop()
-
-# ------------------ Validate manual selections --
-if mode == "Manual" and not success_vals:
-    st.warning("Choose at least one success value.")
-    st.stop()
-
-# ------------------ Apply filters ----------------
-df_filt = apply_filters(df_raw, filter_rules)
-
+df_filt = apply_filters(df_raw, filters)
 if df_filt.empty:
-    st.error("No rows left after filtering.")
-    st.stop()
+    st.error("No rows after filtering."); st.stop()
 
-metrics = compute_binary_metric(df_filt, group_col, metric_col, success_vals)
-if {group_a, group_b} - metrics.keys():
-    st.error("One or both groups missing after filtering.")
-    st.stop()
+# ---------------- Run analysis ---------------
+if test_type == "Proportion":
+    met = compute_binary_metric(df_filt, group_col, metric_col, success_vals)
+    m1, m2 = met[group_a], met[group_b]
+    z, p = two_prop_z(m1["success"], m1["total"], m2["success"], m2["total"])
+    ci = diff_ci(m1["success"], m1["total"], m2["success"], m2["total"], alpha) if show_ci else None
+    st.metric(f"{group_a} successes", f"{m1['success']} / {m1['total']}")
+    st.metric(f"{group_b} successes", f"{m2['success']} / {m2['total']}")
+    st.markdown(narrative(group_a, group_b, m1, m2, z, p, alpha, ci,
+                          metric_desc=f"{metric_col}∈{success_vals}"))
+else:
+    stats = compute_lag_sequential(df_filt, group_col, metric_col, success_vals)
+    fmt = lambda s: f"χ² {s['chi2']:.2f}, p {s['p']:.3f}, Q {s['yule_q']:.2f}"
+    st.markdown(lag_narrative(group_a, stats[group_a], alpha))
+    st.markdown(lag_narrative(group_b, stats[group_b], alpha))
 
-m1, m2 = metrics[group_a], metrics[group_b]
-z, p = two_prop_z(m1["success"], m1["total"], m2["success"], m2["total"])
-ci = diff_ci(m1["success"], m1["total"], m2["success"], m2["total"], alpha) if show_ci else None
-
-# ------------------ Display results ---------------
-st.header("Results")
-left, right = st.columns(2)
-left.metric(f"{group_a} successes", f"{m1['success']} / {m1['total']}")
-right.metric(f"{group_b} successes", f"{m2['success']} / {m2['total']}")
-
-metric_desc = f'“{metric_col} ∈ {success_vals}”'
-st.markdown(narrative(group_a, group_b, m1, m2, z, p, alpha, ci, metric_desc=metric_desc))
 
 with st.expander("Filtered data"):
     st.dataframe(df_filt, use_container_width=True)
