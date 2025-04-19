@@ -1,0 +1,301 @@
+,Timeline,Start time,Duration,Row,Instance num,Pass Type,Player,Recipient,Half,Outcome
+0,BARvALAV,00.000,2.016,Deportivo Alavés,1,Kick Off,Jonathan Rodríguez Menéndez,Guillermo Alfonso Maripán Loaysa,Opposition Half,Complete
+1,BARvALAV,00.003,3.287,Deportivo Alavés,2,Regular Pass,Guillermo Alfonso Maripán Loaysa,Rubén Sobrino Pozuelo,Opposition Half,Incomplete
+2,BARvALAV,00.007,1.697,Barcelona,1,Recovery,Sergio Busquets i Burgos,Ivan Rakitić,Own Half,Complete
+3,BARvALAV,00.008,1.136,Barcelona,2,Regular Pass,Ivan Rakitić,Ousmane Dembélé,Own Half,Complete
+4,BARvALAV,00.010,0.758,Barcelona,3,Regular Pass,Ousmane Dembélé,Jordi Alba Ramos,Own Half,Complete
+5,BARvALAV,00.011,4.726,Barcelona,4,Regular Pass,Jordi Alba Ramos,,Own Half,Incomplete
+6,BARvALAV,00.025,4.153,Deportivo Alavés,3,Regular Pass,Víctor Laguardia Cisneros,,Own Half,Incomplete
+7,BARvALAV,00.030,1.301,Barcelona,5,Regular Pass,Marc-André ter Stegen,Gerard Piqué Bernabéu,Own Half,Complete
+8,BARvALAV,00.035,1.257,Barcelona,6,Regular Pass,Gerard Piqué Bernabéu,Nélson Cabral Semedo,Own Half,Complete
+9,BARvALAV,00.037,0.716,Barcelona,7,Regular Pass,Nélson Cabral Semedo,Sergi Roberto Carnicer,Opposition Half,Complete
+10,BARvALAV,00.038,0.924,Barcelona,8,Regular Pass,Sergi Roberto Carnicer,Nélson Cabral Semedo,Own Half,Complete
+11,BARvALAV,00.040,1.866,Barcelona,9,Regular Pass,Nélson Cabral Semedo,Samuel Yves Umtiti,Own Half,Complete
+12,BARvALAV,00.044,1.294,Barcelona,10,Regular Pass,Samuel Yves Umtiti,Jordi Alba Ramos,Own Half,Complete
+13,BARvALAV,00.046,0.672,Barcelona,11,Regular Pass,Jordi Alba Ramos,Ivan Rakitić,Own Half,Complete
+14,BARvALAV,00.049,3.166,Barcelona,12,Regular Pass,Ivan Rakitić,Gerard Piqué Bernabéu,Own Half,Complete
+15,BARvALAV,00.050,1.391,Barcelona,16,Regular Pass,Samuel Yves Umtiti,Jordi Alba Ramos,Opposition Half,Complete
+16,BARvALAV,00.054,4.154,Deportivo Alavés,17,Regular Pass,Rubén Sobrino Pozuelo,Manu García,Opposition Half,Incomplete
+17,BARvALAV,00.054,0.58,Barcelona,18,Kick Off,Sergio Busquets i Burgos,Ivan Rakitić,Own Half,Complete
+18,BARvALAV,00.057,3.77,Deportivo Alavés,19,Regular Pass,Víctor Laguardia Cisneros,Burgui,Opposition Half,Incomplete
+19,BARvALAV,00.058,1.627,Barcelona,20,Regular Pass,Sergio Busquets i Burgos,Samuel Yves Umtiti,Own Half,Complete
+20,BARvALAV,01.002,4.097,Barcelona,21,Regular Pass,Jordi Alba Ramos,Sergi Roberto Carnicer,Own Half,Incomplete
+21,BARvALAV,01.006,4.33,Barcelona,22,Recovery,Gerard Piqué Bernabéu,Sergi Roberto Carnicer,Own Half,Complete
+22,BARvALAV,01.009,3.882,Deportivo Alavés,23,Kick Off,Ibai Gómez,Víctor Laguardia Cisneros,Opposition Half,Incomplete
+23,BARvALAV,01.011,2.795,Deportivo Alavés,24,Regular Pass,Rubén Sobrino Pozuelo,Víctor Laguardia Cisneros,Opposition Half,Complete
+24,BARvALAV,01.012,1.703,Deportivo Alavés,25,Regular Pass,Burgui,Fernando Pacheco,Opposition Half,Incomplete
+25,BARvALAV,01.014,2.401,Barcelona,26,Regular Pass,Sergio Busquets i Burgos,Samuel Yves Umtiti,Own Half,Incomplete
+26,BARvALAV,01.017,3.111,Barcelona,27,Recovery,Sergio Busquets i Burgos,Marc-André ter Stegen,Own Half,Incomplete
+27,BARvALAV,01.021,4.063,Deportivo Alavés,28,Recovery,Rubén Duarte,Rubén Sobrino Pozuelo,Opposition Half,Incomplete
+28,BARvALAV,01.023,2.491,Barcelona,29,Regular Pass,Philippe Coutinho,Sergio Busquets i Burgos,Own Half,Incomplete
+29,BARvALAV,01.026,3.637,Barcelona,30,Kick Off,Samuel Yves Umtiti,Sergio Busquets i Burgos,Own Half,Complete
+30,BARvALAV,01.028,2.976,Barcelona,31,Regular Pass,Samuel Yves Umtiti,Ousmane Dembélé,Own Half,Complete
+31,BARvALAV,01.030,2.312,Deportivo Alavés,32,Kick Off,Tomás Pina,Guillermo Alfonso Maripán Loaysa,Opposition Half,Complete
+32,BARvALAV,01.033,3.571,Barcelona,33,Recovery,Jordi Alba Ramos,Ivan Rakitić,Opposition Half,Complete
+33,BARvALAV,01.037,4.085,Barcelona,34,Recovery,Ousmane Dembélé,Jordi Alba Ramos,Own Half,Complete
+34,BARvALAV,01.040,3.812,Barcelona,35,Kick Off,Sergi Roberto Carnicer,Philippe Coutinho,Own Half,Incomplete
+35,BARvALAV,01.044,4.255,Deportivo Alavés,36,Kick Off,Manu García,Víctor Laguardia Cisneros,Opposition Half,Incomplete
+36,BARvALAV,01.045,1.517,Barcelona,37,Kick Off,Sergi Roberto Carnicer,Sergi Roberto Carnicer,Own Half,Incomplete
+37,BARvALAV,01.048,3.869,Deportivo Alavés,38,Kick Off,Manu García,Rubén Duarte,Opposition Half,Incomplete
+38,BARvALAV,01.049,1.104,Barcelona,39,Regular Pass,Luis Suárez,Philippe Coutinho,Own Half,Complete
+39,BARvALAV,01.049,0.558,Deportivo Alavés,40,Regular Pass,Guillermo Alfonso Maripán Loaysa,Rubén Duarte,Opposition Half,Complete
+40,BARvALAV,01.050,1.612,Deportivo Alavés,41,Regular Pass,Burgui,Fernando Pacheco,Opposition Half,Incomplete
+41,BARvALAV,01.051,1.978,Deportivo Alavés,42,Recovery,Tomás Pina,Rubén Sobrino Pozuelo,Opposition Half,Complete
+42,BARvALAV,01.052,1.326,Barcelona,43,Recovery,Nélson Cabral Semedo,Philippe Coutinho,Opposition Half,Complete
+43,BARvALAV,01.056,4.184,Barcelona,44,Regular Pass,Marc-André ter Stegen,Gerard Piqué Bernabéu,Own Half,Complete
+44,BARvALAV,01.058,2.92,Deportivo Alavés,45,Recovery,Víctor Laguardia Cisneros,Jonathan Rodríguez Menéndez,Opposition Half,Incomplete
+45,BARvALAV,01.059,1.839,Deportivo Alavés,46,Regular Pass,Guillermo Alfonso Maripán Loaysa,Burgui,Opposition Half,Complete
+46,BARvALAV,02.003,4.315,Deportivo Alavés,47,Regular Pass,Fernando Pacheco,Tomás Pina,Opposition Half,Complete
+47,BARvALAV,02.006,3.137,Deportivo Alavés,48,Regular Pass,Burgui,Víctor Laguardia Cisneros,Opposition Half,Incomplete
+48,BARvALAV,02.008,2.274,Barcelona,49,Kick Off,Gerard Piqué Bernabéu,Jordi Alba Ramos,Own Half,Complete
+49,BARvALAV,02.010,2.718,Deportivo Alavés,50,Recovery,Rubén Sobrino Pozuelo,Burgui,Opposition Half,Complete
+50,BARvALAV,02.011,1.071,Deportivo Alavés,51,Regular Pass,Burgui,Manu García,Opposition Half,Incomplete
+51,BARvALAV,02.013,2.781,Deportivo Alavés,52,Regular Pass,Jonathan Rodríguez Menéndez,Fernando Pacheco,Opposition Half,Complete
+52,BARvALAV,02.014,1.039,Deportivo Alavés,53,Recovery,Guillermo Alfonso Maripán Loaysa,Rubén Sobrino Pozuelo,Opposition Half,Complete
+53,BARvALAV,02.017,3.277,Barcelona,54,Kick Off,Philippe Coutinho,Nélson Cabral Semedo,Opposition Half,Complete
+54,BARvALAV,02.017,0.971,Deportivo Alavés,55,Kick Off,Rubén Duarte,Fernando Pacheco,Opposition Half,Incomplete
+55,BARvALAV,02.020,3.147,Deportivo Alavés,56,Kick Off,Guillermo Alfonso Maripán Loaysa,Ibai Gómez,Opposition Half,Complete
+56,BARvALAV,02.021,1.005,Deportivo Alavés,57,Regular Pass,Manu García,Ibai Gómez,Opposition Half,Incomplete
+57,BARvALAV,02.022,1.07,Deportivo Alavés,58,Recovery,Ibai Gómez,Burgui,Opposition Half,Complete
+58,BARvALAV,02.024,2.279,Deportivo Alavés,59,Recovery,Rubén Duarte,Fernando Pacheco,Opposition Half,Incomplete
+59,BARvALAV,02.024,0.833,Deportivo Alavés,60,Regular Pass,Fernando Pacheco,Guillermo Alfonso Maripán Loaysa,Opposition Half,Complete
+60,BARvALAV,02.024,0.705,Barcelona,61,Regular Pass,Marc-André ter Stegen,Sergi Roberto Carnicer,Own Half,Incomplete
+61,BARvALAV,02.027,3.156,Barcelona,62,Regular Pass,Sergi Roberto Carnicer,Luis Suárez,Opposition Half,Incomplete
+62,BARvALAV,02.028,1.618,Deportivo Alavés,63,Kick Off,Ibai Gómez,Tomás Pina,Opposition Half,Incomplete
+63,BARvALAV,02.032,4.389,Deportivo Alavés,64,Kick Off,Víctor Laguardia Cisneros,Burgui,Opposition Half,Complete
+64,BARvALAV,02.032,0.785,Barcelona,65,Recovery,Marc-André ter Stegen,Luis Suárez,Own Half,Complete
+65,BARvALAV,02.035,3.48,Deportivo Alavés,66,Recovery,Burgui,Guillermo Alfonso Maripán Loaysa,Opposition Half,Complete
+66,BARvALAV,02.039,4.463,Barcelona,67,Kick Off,Nélson Cabral Semedo,Marc-André ter Stegen,Opposition Half,Incomplete
+67,BARvALAV,02.042,3.342,Deportivo Alavés,68,Recovery,Ibai Gómez,Rubén Sobrino Pozuelo,Opposition Half,Incomplete
+68,BARvALAV,02.045,3.846,Deportivo Alavés,69,Recovery,Rubén Duarte,Rubén Sobrino Pozuelo,Opposition Half,Incomplete
+69,BARvALAV,02.047,2.838,Barcelona,70,Regular Pass,Marc-André ter Stegen,Marc-André ter Stegen,Opposition Half,Incomplete
+70,BARvALAV,02.048,1.914,Barcelona,71,Recovery,Gerard Piqué Bernabéu,Ivan Rakitić,Opposition Half,Incomplete
+71,BARvALAV,02.051,3.88,Barcelona,72,Kick Off,Samuel Yves Umtiti,Sergi Roberto Carnicer,Own Half,Complete
+72,BARvALAV,02.051,0.909,Barcelona,73,Regular Pass,Nélson Cabral Semedo,Gerard Piqué Bernabéu,Own Half,Incomplete
+73,BARvALAV,02.053,2.092,Barcelona,74,Regular Pass,Marc-André ter Stegen,Luis Suárez,Own Half,Complete
+74,BARvALAV,02.055,2.371,Barcelona,75,Kick Off,Gerard Piqué Bernabéu,Ivan Rakitić,Opposition Half,Complete
+75,BARvALAV,02.056,1.985,Barcelona,76,Regular Pass,Marc-André ter Stegen,Gerard Piqué Bernabéu,Own Half,Incomplete
+76,BARvALAV,02.058,2.981,Deportivo Alavés,77,Regular Pass,Ibai Gómez,Guillermo Alfonso Maripán Loaysa,Opposition Half,Incomplete
+77,BARvALAV,03.002,4.19,Barcelona,78,Kick Off,Marc-André ter Stegen,Marc-André ter Stegen,Opposition Half,Incomplete
+78,BARvALAV,03.004,2.306,Barcelona,79,Recovery,Marc-André ter Stegen,Sergi Roberto Carnicer,Opposition Half,Complete
+79,BARvALAV,03.007,3.374,Barcelona,80,Recovery,Sergio Busquets i Burgos,Ousmane Dembélé,Opposition Half,Incomplete
+80,BARvALAV,03.008,1.462,Barcelona,81,Kick Off,Samuel Yves Umtiti,Jordi Alba Ramos,Own Half,Incomplete
+81,BARvALAV,03.008,0.518,Deportivo Alavés,82,Recovery,Jonathan Rodríguez Menéndez,Tomás Pina,Opposition Half,Complete
+82,BARvALAV,03.008,0.541,Deportivo Alavés,83,Kick Off,Jonathan Rodríguez Menéndez,Víctor Laguardia Cisneros,Opposition Half,Complete
+83,BARvALAV,03.009,1.123,Deportivo Alavés,84,Recovery,Fernando Pacheco,Fernando Pacheco,Opposition Half,Complete
+84,BARvALAV,03.012,3.277,Barcelona,85,Kick Off,Philippe Coutinho,Sergio Busquets i Burgos,Own Half,Incomplete
+85,BARvALAV,03.016,4.052,Barcelona,86,Regular Pass,Nélson Cabral Semedo,Ivan Rakitić,Own Half,Complete
+86,BARvALAV,03.019,3.16,Barcelona,87,Regular Pass,Luis Suárez,Gerard Piqué Bernabéu,Own Half,Incomplete
+87,BARvALAV,03.021,2.947,Barcelona,88,Kick Off,Jordi Alba Ramos,Gerard Piqué Bernabéu,Opposition Half,Complete
+88,BARvALAV,03.024,3.558,Deportivo Alavés,89,Kick Off,Ibai Gómez,Jonathan Rodríguez Menéndez,Opposition Half,Incomplete
+89,BARvALAV,03.027,3.565,Barcelona,90,Kick Off,Gerard Piqué Bernabéu,Nélson Cabral Semedo,Own Half,Incomplete
+90,BARvALAV,03.030,3.192,Barcelona,91,Regular Pass,Ousmane Dembélé,Gerard Piqué Bernabéu,Opposition Half,Incomplete
+91,BARvALAV,03.033,3.68,Barcelona,92,Kick Off,Philippe Coutinho,Samuel Yves Umtiti,Opposition Half,Complete
+92,BARvALAV,03.034,1.905,Deportivo Alavés,93,Recovery,Rubén Duarte,Ibai Gómez,Opposition Half,Complete
+93,BARvALAV,03.036,2.099,Barcelona,94,Regular Pass,Sergi Roberto Carnicer,Gerard Piqué Bernabéu,Own Half,Incomplete
+94,BARvALAV,03.038,2.901,Deportivo Alavés,95,Recovery,Rubén Duarte,Burgui,Opposition Half,Complete
+95,BARvALAV,03.040,2.258,Barcelona,96,Recovery,Marc-André ter Stegen,Ivan Rakitić,Own Half,Incomplete
+96,BARvALAV,03.042,2.304,Deportivo Alavés,97,Kick Off,Ibai Gómez,Ibai Gómez,Opposition Half,Complete
+97,BARvALAV,03.044,2.179,Barcelona,98,Recovery,Jordi Alba Ramos,Marc-André ter Stegen,Opposition Half,Complete
+98,BARvALAV,03.046,2.778,Barcelona,99,Regular Pass,Jordi Alba Ramos,Nélson Cabral Semedo,Own Half,Incomplete
+99,BARvALAV,03.047,1.617,Barcelona,100,Recovery,Sergio Busquets i Burgos,Samuel Yves Umtiti,Own Half,Incomplete
+100,BARvALAV,03.048,1.627,Deportivo Alavés,101,Recovery,Rubén Sobrino Pozuelo,Rubén Sobrino Pozuelo,Opposition Half,Complete
+101,BARvALAV,03.051,3.88,Barcelona,102,Recovery,Gerard Piqué Bernabéu,Marc-André ter Stegen,Opposition Half,Incomplete
+102,BARvALAV,03.055,4.01,Barcelona,103,Kick Off,Luis Suárez,Philippe Coutinho,Opposition Half,Complete
+103,BARvALAV,03.056,1.006,Deportivo Alavés,104,Kick Off,Ibai Gómez,Fernando Pacheco,Opposition Half,Complete
+104,BARvALAV,03.058,2.414,Deportivo Alavés,105,Recovery,Guillermo Alfonso Maripán Loaysa,Manu García,Opposition Half,Complete
+105,BARvALAV,04.000,2.219,Barcelona,106,Kick Off,Nélson Cabral Semedo,Gerard Piqué Bernabéu,Opposition Half,Incomplete
+106,BARvALAV,04.001,1.73,Deportivo Alavés,107,Kick Off,Jonathan Rodríguez Menéndez,Manu García,Opposition Half,Complete
+107,BARvALAV,04.001,0.903,Barcelona,108,Regular Pass,Nélson Cabral Semedo,Sergi Roberto Carnicer,Own Half,Complete
+108,BARvALAV,04.004,3.531,Deportivo Alavés,109,Regular Pass,Víctor Laguardia Cisneros,Manu García,Opposition Half,Incomplete
+109,BARvALAV,04.006,2.953,Barcelona,110,Recovery,Luis Suárez,Gerard Piqué Bernabéu,Opposition Half,Incomplete
+110,BARvALAV,04.008,2.106,Deportivo Alavés,111,Recovery,Manu García,Tomás Pina,Opposition Half,Incomplete
+111,BARvALAV,04.009,1.624,Deportivo Alavés,112,Recovery,Víctor Laguardia Cisneros,Ibai Gómez,Opposition Half,Complete
+112,BARvALAV,04.009,0.712,Deportivo Alavés,113,Recovery,Ibai Gómez,Jonathan Rodríguez Menéndez,Opposition Half,Complete
+113,BARvALAV,04.012,3.739,Deportivo Alavés,114,Regular Pass,Ibai Gómez,Tomás Pina,Opposition Half,Incomplete
+114,BARvALAV,04.013,1.105,Barcelona,115,Recovery,Marc-André ter Stegen,Marc-André ter Stegen,Own Half,Complete
+115,BARvALAV,04.015,2.809,Barcelona,116,Kick Off,Samuel Yves Umtiti,Nélson Cabral Semedo,Opposition Half,Complete
+116,BARvALAV,04.016,1.177,Barcelona,117,Kick Off,Gerard Piqué Bernabéu,Nélson Cabral Semedo,Opposition Half,Incomplete
+117,BARvALAV,04.018,2.005,Barcelona,118,Regular Pass,Sergio Busquets i Burgos,Nélson Cabral Semedo,Own Half,Incomplete
+118,BARvALAV,04.022,4.24,Deportivo Alavés,119,Kick Off,Fernando Pacheco,Fernando Pacheco,Opposition Half,Complete
+119,BARvALAV,04.022,0.537,Barcelona,120,Regular Pass,Nélson Cabral Semedo,Marc-André ter Stegen,Own Half,Complete
+120,BARvALAV,04.022,0.91,Barcelona,121,Regular Pass,Marc-André ter Stegen,Gerard Piqué Bernabéu,Opposition Half,Complete
+121,BARvALAV,04.023,1.901,Barcelona,122,Recovery,Gerard Piqué Bernabéu,Sergi Roberto Carnicer,Opposition Half,Incomplete
+122,BARvALAV,04.024,1.107,Barcelona,123,Kick Off,Jordi Alba Ramos,Luis Suárez,Own Half,Incomplete
+123,BARvALAV,04.024,0.858,Barcelona,124,Regular Pass,Luis Suárez,Nélson Cabral Semedo,Own Half,Incomplete
+124,BARvALAV,04.026,2.472,Barcelona,125,Kick Off,Luis Suárez,Marc-André ter Stegen,Opposition Half,Incomplete
+125,BARvALAV,04.030,4.055,Barcelona,126,Recovery,Ousmane Dembélé,Philippe Coutinho,Own Half,Complete
+126,BARvALAV,04.032,2.264,Barcelona,127,Regular Pass,Sergio Busquets i Burgos,Philippe Coutinho,Own Half,Incomplete
+127,BARvALAV,04.034,2.589,Deportivo Alavés,128,Regular Pass,Jonathan Rodríguez Menéndez,Jonathan Rodríguez Menéndez,Opposition Half,Complete
+128,BARvALAV,04.037,3.137,Deportivo Alavés,129,Regular Pass,Tomás Pina,Jonathan Rodríguez Menéndez,Opposition Half,Complete
+129,BARvALAV,04.038,1.937,Barcelona,130,Kick Off,Sergio Busquets i Burgos,Ivan Rakitić,Own Half,Complete
+130,BARvALAV,04.042,4.414,Deportivo Alavés,131,Recovery,Tomás Pina,Fernando Pacheco,Opposition Half,Complete
+131,BARvALAV,04.045,3.252,Barcelona,132,Recovery,Samuel Yves Umtiti,Ousmane Dembélé,Own Half,Incomplete
+132,BARvALAV,04.049,4.164,Deportivo Alavés,133,Recovery,Fernando Pacheco,Fernando Pacheco,Opposition Half,Complete
+133,BARvALAV,04.049,0.683,Deportivo Alavés,134,Recovery,Fernando Pacheco,Víctor Laguardia Cisneros,Opposition Half,Incomplete
+134,BARvALAV,04.052,3.324,Barcelona,135,Recovery,Ousmane Dembélé,Gerard Piqué Bernabéu,Opposition Half,Complete
+135,BARvALAV,04.056,4.073,Deportivo Alavés,136,Regular Pass,Jonathan Rodríguez Menéndez,Fernando Pacheco,Opposition Half,Complete
+136,BARvALAV,04.059,3.962,Barcelona,137,Recovery,Sergi Roberto Carnicer,Philippe Coutinho,Opposition Half,Incomplete
+137,BARvALAV,05.000,1.41,Deportivo Alavés,138,Kick Off,Fernando Pacheco,Manu García,Opposition Half,Complete
+138,BARvALAV,05.002,2.824,Barcelona,139,Recovery,Philippe Coutinho,Gerard Piqué Bernabéu,Opposition Half,Incomplete
+139,BARvALAV,05.003,1.503,Barcelona,140,Recovery,Samuel Yves Umtiti,Jordi Alba Ramos,Own Half,Incomplete
+140,BARvALAV,05.003,0.992,Barcelona,141,Regular Pass,Samuel Yves Umtiti,Luis Suárez,Opposition Half,Complete
+141,BARvALAV,05.006,3.198,Deportivo Alavés,142,Recovery,Tomás Pina,Burgui,Opposition Half,Incomplete
+142,BARvALAV,05.006,0.556,Deportivo Alavés,143,Recovery,Fernando Pacheco,Ibai Gómez,Opposition Half,Complete
+143,BARvALAV,05.008,2.393,Barcelona,144,Kick Off,Ivan Rakitić,Luis Suárez,Own Half,Complete
+144,BARvALAV,05.010,2.351,Deportivo Alavés,145,Regular Pass,Guillermo Alfonso Maripán Loaysa,Rubén Sobrino Pozuelo,Opposition Half,Incomplete
+145,BARvALAV,05.011,1.413,Barcelona,146,Kick Off,Philippe Coutinho,Gerard Piqué Bernabéu,Opposition Half,Incomplete
+146,BARvALAV,05.011,0.982,Barcelona,147,Regular Pass,Sergi Roberto Carnicer,Ivan Rakitić,Own Half,Complete
+147,BARvALAV,05.013,2.982,Barcelona,148,Recovery,Nélson Cabral Semedo,Nélson Cabral Semedo,Own Half,Complete
+148,BARvALAV,05.016,3.64,Barcelona,149,Recovery,Gerard Piqué Bernabéu,Jordi Alba Ramos,Opposition Half,Incomplete
+149,BARvALAV,05.016,0.823,Deportivo Alavés,150,Recovery,Manu García,Jonathan Rodríguez Menéndez,Opposition Half,Complete
+150,BARvALAV,05.020,4.474,Barcelona,151,Regular Pass,Gerard Piqué Bernabéu,Sergio Busquets i Burgos,Opposition Half,Complete
+151,BARvALAV,05.022,2.406,Barcelona,152,Recovery,Luis Suárez,Marc-André ter Stegen,Own Half,Incomplete
+152,BARvALAV,05.024,2.087,Barcelona,153,Recovery,Sergi Roberto Carnicer,Sergio Busquets i Burgos,Own Half,Complete
+153,BARvALAV,05.028,4.032,Barcelona,154,Kick Off,Samuel Yves Umtiti,Philippe Coutinho,Opposition Half,Complete
+154,BARvALAV,05.030,2.888,Barcelona,155,Kick Off,Luis Suárez,Samuel Yves Umtiti,Own Half,Complete
+155,BARvALAV,05.031,1.843,Deportivo Alavés,156,Recovery,Rubén Sobrino Pozuelo,Jonathan Rodríguez Menéndez,Opposition Half,Incomplete
+156,BARvALAV,05.034,3.557,Barcelona,157,Kick Off,Sergio Busquets i Burgos,Nélson Cabral Semedo,Own Half,Complete
+157,BARvALAV,05.034,0.857,Barcelona,158,Recovery,Gerard Piqué Bernabéu,Marc-André ter Stegen,Opposition Half,Incomplete
+158,BARvALAV,05.036,2.385,Barcelona,159,Kick Off,Ousmane Dembélé,Nélson Cabral Semedo,Opposition Half,Complete
+159,BARvALAV,05.038,2.845,Deportivo Alavés,160,Regular Pass,Ibai Gómez,Ibai Gómez,Opposition Half,Complete
+160,BARvALAV,05.041,3.765,Deportivo Alavés,161,Regular Pass,Rubén Sobrino Pozuelo,Burgui,Opposition Half,Complete
+161,BARvALAV,05.044,3.701,Deportivo Alavés,162,Recovery,Ibai Gómez,Manu García,Opposition Half,Complete
+162,BARvALAV,05.046,2.041,Deportivo Alavés,163,Regular Pass,Rubén Sobrino Pozuelo,Víctor Laguardia Cisneros,Opposition Half,Incomplete
+163,BARvALAV,05.047,1.672,Deportivo Alavés,164,Regular Pass,Jonathan Rodríguez Menéndez,Manu García,Opposition Half,Complete
+164,BARvALAV,05.049,2.386,Deportivo Alavés,165,Regular Pass,Rubén Duarte,Rubén Sobrino Pozuelo,Opposition Half,Incomplete
+165,BARvALAV,05.052,3.611,Deportivo Alavés,166,Recovery,Burgui,Manu García,Opposition Half,Incomplete
+166,BARvALAV,05.055,3.493,Deportivo Alavés,167,Kick Off,Burgui,Víctor Laguardia Cisneros,Opposition Half,Incomplete
+167,BARvALAV,05.058,3.524,Deportivo Alavés,168,Kick Off,Rubén Sobrino Pozuelo,Fernando Pacheco,Opposition Half,Complete
+168,BARvALAV,06.002,4.409,Barcelona,169,Kick Off,Samuel Yves Umtiti,Luis Suárez,Opposition Half,Incomplete
+169,BARvALAV,06.005,3.43,Barcelona,170,Regular Pass,Sergio Busquets i Burgos,Nélson Cabral Semedo,Own Half,Complete
+170,BARvALAV,06.009,4.056,Deportivo Alavés,171,Recovery,Guillermo Alfonso Maripán Loaysa,Burgui,Opposition Half,Incomplete
+171,BARvALAV,06.011,2.775,Barcelona,172,Regular Pass,Gerard Piqué Bernabéu,Sergi Roberto Carnicer,Own Half,Complete
+172,BARvALAV,06.014,3.547,Deportivo Alavés,173,Kick Off,Ibai Gómez,Víctor Laguardia Cisneros,Opposition Half,Incomplete
+173,BARvALAV,06.017,3.659,Deportivo Alavés,174,Recovery,Jonathan Rodríguez Menéndez,Tomás Pina,Opposition Half,Incomplete
+174,BARvALAV,06.018,1.688,Barcelona,175,Recovery,Nélson Cabral Semedo,Jordi Alba Ramos,Opposition Half,Complete
+175,BARvALAV,06.018,0.648,Barcelona,176,Recovery,Ousmane Dembélé,Ousmane Dembélé,Own Half,Complete
+176,BARvALAV,06.020,2.101,Barcelona,177,Kick Off,Gerard Piqué Bernabéu,Gerard Piqué Bernabéu,Opposition Half,Incomplete
+177,BARvALAV,06.023,3.684,Barcelona,178,Recovery,Jordi Alba Ramos,Luis Suárez,Opposition Half,Complete
+178,BARvALAV,06.025,2.414,Deportivo Alavés,179,Regular Pass,Fernando Pacheco,Manu García,Opposition Half,Incomplete
+179,BARvALAV,06.026,1.633,Barcelona,180,Kick Off,Ivan Rakitić,Gerard Piqué Bernabéu,Opposition Half,Incomplete
+180,BARvALAV,06.028,2.686,Barcelona,181,Recovery,Jordi Alba Ramos,Ivan Rakitić,Opposition Half,Incomplete
+181,BARvALAV,06.031,3.772,Deportivo Alavés,182,Regular Pass,Jonathan Rodríguez Menéndez,Fernando Pacheco,Opposition Half,Incomplete
+182,BARvALAV,06.032,1.929,Deportivo Alavés,183,Regular Pass,Ibai Gómez,Jonathan Rodríguez Menéndez,Opposition Half,Incomplete
+183,BARvALAV,06.033,1.559,Barcelona,184,Kick Off,Marc-André ter Stegen,Ivan Rakitić,Own Half,Incomplete
+184,BARvALAV,06.036,3.645,Barcelona,185,Kick Off,Luis Suárez,Ivan Rakitić,Opposition Half,Complete
+185,BARvALAV,06.037,1.416,Barcelona,186,Kick Off,Jordi Alba Ramos,Nélson Cabral Semedo,Opposition Half,Incomplete
+186,BARvALAV,06.038,1.267,Deportivo Alavés,187,Kick Off,Burgui,Rubén Sobrino Pozuelo,Opposition Half,Complete
+187,BARvALAV,06.040,2.452,Barcelona,188,Regular Pass,Nélson Cabral Semedo,Ousmane Dembélé,Own Half,Complete
+188,BARvALAV,06.042,2.335,Deportivo Alavés,189,Regular Pass,Rubén Duarte,Guillermo Alfonso Maripán Loaysa,Opposition Half,Incomplete
+189,BARvALAV,06.043,1.067,Deportivo Alavés,190,Regular Pass,Manu García,Guillermo Alfonso Maripán Loaysa,Opposition Half,Incomplete
+190,BARvALAV,06.043,0.696,Barcelona,191,Kick Off,Gerard Piqué Bernabéu,Marc-André ter Stegen,Opposition Half,Incomplete
+191,BARvALAV,06.044,1.102,Deportivo Alavés,192,Kick Off,Manu García,Ibai Gómez,Opposition Half,Complete
+192,BARvALAV,06.045,1.405,Barcelona,193,Kick Off,Nélson Cabral Semedo,Nélson Cabral Semedo,Opposition Half,Complete
+193,BARvALAV,06.047,2.739,Barcelona,194,Recovery,Sergi Roberto Carnicer,Luis Suárez,Own Half,Incomplete
+194,BARvALAV,06.048,1.082,Barcelona,195,Kick Off,Luis Suárez,Marc-André ter Stegen,Opposition Half,Complete
+195,BARvALAV,06.050,2.822,Barcelona,196,Recovery,Sergio Busquets i Burgos,Ivan Rakitić,Own Half,Incomplete
+196,BARvALAV,06.051,1.803,Barcelona,197,Regular Pass,Jordi Alba Ramos,Luis Suárez,Opposition Half,Incomplete
+197,BARvALAV,06.054,3.126,Barcelona,198,Kick Off,Gerard Piqué Bernabéu,Sergi Roberto Carnicer,Opposition Half,Complete
+198,BARvALAV,06.055,1.315,Barcelona,199,Recovery,Samuel Yves Umtiti,Philippe Coutinho,Own Half,Complete
+199,BARvALAV,06.056,1.101,Barcelona,200,Kick Off,Sergio Busquets i Burgos,Marc-André ter Stegen,Opposition Half,Complete
+200,BARvALAV,06.057,1.279,Barcelona,201,Regular Pass,Sergio Busquets i Burgos,Sergio Busquets i Burgos,Own Half,Incomplete
+201,BARvALAV,06.057,0.888,Barcelona,202,Kick Off,Jordi Alba Ramos,Gerard Piqué Bernabéu,Own Half,Complete
+202,BARvALAV,06.057,0.892,Barcelona,203,Regular Pass,Sergi Roberto Carnicer,Sergio Busquets i Burgos,Own Half,Complete
+203,BARvALAV,06.058,1.009,Deportivo Alavés,204,Regular Pass,Manu García,Rubén Duarte,Opposition Half,Incomplete
+204,BARvALAV,06.059,1.407,Deportivo Alavés,205,Regular Pass,Ibai Gómez,Fernando Pacheco,Opposition Half,Incomplete
+205,BARvALAV,07.000,1.925,Barcelona,206,Recovery,Philippe Coutinho,Luis Suárez,Own Half,Complete
+206,BARvALAV,07.001,1.221,Barcelona,207,Regular Pass,Luis Suárez,Philippe Coutinho,Own Half,Complete
+207,BARvALAV,07.002,1.434,Deportivo Alavés,208,Recovery,Rubén Duarte,Guillermo Alfonso Maripán Loaysa,Opposition Half,Incomplete
+208,BARvALAV,07.003,1.868,Deportivo Alavés,209,Recovery,Manu García,Guillermo Alfonso Maripán Loaysa,Opposition Half,Complete
+209,BARvALAV,07.004,1.246,Barcelona,210,Kick Off,Marc-André ter Stegen,Philippe Coutinho,Own Half,Incomplete
+210,BARvALAV,07.006,2.178,Barcelona,211,Kick Off,Ivan Rakitić,Marc-André ter Stegen,Own Half,Complete
+211,BARvALAV,07.006,0.766,Barcelona,212,Kick Off,Jordi Alba Ramos,Ivan Rakitić,Own Half,Incomplete
+212,BARvALAV,07.007,1.768,Barcelona,213,Recovery,Sergi Roberto Carnicer,Sergio Busquets i Burgos,Opposition Half,Incomplete
+213,BARvALAV,07.007,0.963,Barcelona,214,Recovery,Sergio Busquets i Burgos,Gerard Piqué Bernabéu,Opposition Half,Complete
+214,BARvALAV,07.007,0.648,Barcelona,215,Recovery,Ousmane Dembélé,Nélson Cabral Semedo,Own Half,Incomplete
+215,BARvALAV,07.010,3.423,Deportivo Alavés,216,Regular Pass,Manu García,Burgui,Opposition Half,Incomplete
+216,BARvALAV,07.012,2.224,Deportivo Alavés,217,Regular Pass,Ibai Gómez,Fernando Pacheco,Opposition Half,Incomplete
+217,BARvALAV,07.016,4.077,Barcelona,218,Regular Pass,Ousmane Dembélé,Marc-André ter Stegen,Own Half,Incomplete
+218,BARvALAV,07.018,2.469,Barcelona,219,Recovery,Ousmane Dembélé,Luis Suárez,Opposition Half,Incomplete
+219,BARvALAV,07.021,3.309,Barcelona,220,Regular Pass,Samuel Yves Umtiti,Philippe Coutinho,Opposition Half,Complete
+220,BARvALAV,07.024,3.399,Deportivo Alavés,221,Recovery,Guillermo Alfonso Maripán Loaysa,Manu García,Opposition Half,Complete
+221,BARvALAV,07.024,0.864,Deportivo Alavés,222,Kick Off,Guillermo Alfonso Maripán Loaysa,Víctor Laguardia Cisneros,Opposition Half,Incomplete
+222,BARvALAV,07.027,3.446,Barcelona,223,Regular Pass,Samuel Yves Umtiti,Ousmane Dembélé,Opposition Half,Complete
+223,BARvALAV,07.028,1.303,Deportivo Alavés,224,Kick Off,Guillermo Alfonso Maripán Loaysa,Rubén Sobrino Pozuelo,Opposition Half,Complete
+224,BARvALAV,07.028,0.963,Barcelona,225,Regular Pass,Philippe Coutinho,Ousmane Dembélé,Opposition Half,Incomplete
+225,BARvALAV,07.029,1.799,Deportivo Alavés,226,Recovery,Manu García,Rubén Sobrino Pozuelo,Opposition Half,Incomplete
+226,BARvALAV,07.030,1.279,Deportivo Alavés,227,Regular Pass,Guillermo Alfonso Maripán Loaysa,Guillermo Alfonso Maripán Loaysa,Opposition Half,Incomplete
+227,BARvALAV,07.031,1.63,Barcelona,228,Regular Pass,Ousmane Dembélé,Sergio Busquets i Burgos,Opposition Half,Complete
+228,BARvALAV,07.032,1.41,Deportivo Alavés,229,Recovery,Jonathan Rodríguez Menéndez,Ibai Gómez,Opposition Half,Incomplete
+229,BARvALAV,07.034,2.501,Deportivo Alavés,230,Regular Pass,Víctor Laguardia Cisneros,Tomás Pina,Opposition Half,Incomplete
+230,BARvALAV,07.034,0.583,Barcelona,231,Regular Pass,Ousmane Dembélé,Marc-André ter Stegen,Own Half,Incomplete
+231,BARvALAV,07.034,0.543,Barcelona,232,Regular Pass,Ivan Rakitić,Luis Suárez,Own Half,Incomplete
+232,BARvALAV,07.034,0.717,Barcelona,233,Kick Off,Sergio Busquets i Burgos,Gerard Piqué Bernabéu,Opposition Half,Complete
+233,BARvALAV,07.036,2.996,Deportivo Alavés,234,Kick Off,Rubén Duarte,Víctor Laguardia Cisneros,Opposition Half,Complete
+234,BARvALAV,07.038,2.178,Barcelona,235,Kick Off,Gerard Piqué Bernabéu,Gerard Piqué Bernabéu,Own Half,Complete
+235,BARvALAV,07.041,3.803,Barcelona,236,Kick Off,Ousmane Dembélé,Sergio Busquets i Burgos,Own Half,Complete
+236,BARvALAV,07.045,4.186,Barcelona,237,Recovery,Sergi Roberto Carnicer,Ivan Rakitić,Own Half,Incomplete
+237,BARvALAV,07.045,0.637,Barcelona,238,Regular Pass,Luis Suárez,Ivan Rakitić,Opposition Half,Incomplete
+238,BARvALAV,07.047,2.252,Deportivo Alavés,239,Kick Off,Fernando Pacheco,Víctor Laguardia Cisneros,Opposition Half,Complete
+239,BARvALAV,07.048,1.275,Deportivo Alavés,240,Kick Off,Rubén Sobrino Pozuelo,Rubén Sobrino Pozuelo,Opposition Half,Incomplete
+240,BARvALAV,07.052,4.052,Deportivo Alavés,241,Recovery,Guillermo Alfonso Maripán Loaysa,Tomás Pina,Opposition Half,Incomplete
+241,BARvALAV,07.053,1.757,Deportivo Alavés,242,Kick Off,Fernando Pacheco,Rubén Duarte,Opposition Half,Incomplete
+242,BARvALAV,07.056,3.818,Barcelona,243,Regular Pass,Sergio Busquets i Burgos,Luis Suárez,Own Half,Complete
+243,BARvALAV,07.059,3.854,Barcelona,244,Regular Pass,Gerard Piqué Bernabéu,Jordi Alba Ramos,Own Half,Complete
+244,BARvALAV,08.002,3.447,Deportivo Alavés,245,Recovery,Rubén Sobrino Pozuelo,Burgui,Opposition Half,Incomplete
+245,BARvALAV,08.003,1.588,Deportivo Alavés,246,Kick Off,Guillermo Alfonso Maripán Loaysa,Rubén Sobrino Pozuelo,Opposition Half,Complete
+246,BARvALAV,08.005,2.338,Barcelona,247,Recovery,Nélson Cabral Semedo,Ivan Rakitić,Opposition Half,Incomplete
+247,BARvALAV,08.006,1.703,Deportivo Alavés,248,Regular Pass,Fernando Pacheco,Guillermo Alfonso Maripán Loaysa,Opposition Half,Complete
+248,BARvALAV,08.007,1.29,Barcelona,249,Regular Pass,Gerard Piqué Bernabéu,Luis Suárez,Opposition Half,Complete
+249,BARvALAV,08.009,2.034,Deportivo Alavés,250,Regular Pass,Rubén Sobrino Pozuelo,Tomás Pina,Opposition Half,Complete
+250,BARvALAV,08.011,2.265,Deportivo Alavés,251,Recovery,Tomás Pina,Fernando Pacheco,Opposition Half,Incomplete
+251,BARvALAV,08.013,2.575,Deportivo Alavés,252,Kick Off,Víctor Laguardia Cisneros,Manu García,Opposition Half,Complete
+252,BARvALAV,08.014,1.878,Deportivo Alavés,253,Recovery,Guillermo Alfonso Maripán Loaysa,Jonathan Rodríguez Menéndez,Opposition Half,Complete
+253,BARvALAV,08.017,3.386,Barcelona,254,Recovery,Ivan Rakitić,Nélson Cabral Semedo,Opposition Half,Incomplete
+254,BARvALAV,08.020,3.239,Deportivo Alavés,255,Regular Pass,Guillermo Alfonso Maripán Loaysa,Burgui,Opposition Half,Complete
+255,BARvALAV,08.021,1.067,Deportivo Alavés,256,Regular Pass,Tomás Pina,Guillermo Alfonso Maripán Loaysa,Opposition Half,Complete
+256,BARvALAV,08.025,4.419,Deportivo Alavés,257,Recovery,Jonathan Rodríguez Menéndez,Jonathan Rodríguez Menéndez,Opposition Half,Complete
+257,BARvALAV,08.027,2.544,Deportivo Alavés,258,Kick Off,Víctor Laguardia Cisneros,Rubén Duarte,Opposition Half,Complete
+258,BARvALAV,08.029,2.522,Deportivo Alavés,259,Regular Pass,Guillermo Alfonso Maripán Loaysa,Jonathan Rodríguez Menéndez,Opposition Half,Complete
+259,BARvALAV,08.031,2.242,Barcelona,260,Recovery,Ivan Rakitić,Nélson Cabral Semedo,Own Half,Incomplete
+260,BARvALAV,08.034,3.018,Barcelona,261,Recovery,Sergio Busquets i Burgos,Jordi Alba Ramos,Opposition Half,Complete
+261,BARvALAV,08.034,0.564,Deportivo Alavés,262,Kick Off,Tomás Pina,Burgui,Opposition Half,Complete
+262,BARvALAV,08.035,1.893,Barcelona,263,Regular Pass,Sergio Busquets i Burgos,Sergio Busquets i Burgos,Opposition Half,Incomplete
+263,BARvALAV,08.037,2.14,Deportivo Alavés,264,Regular Pass,Rubén Duarte,Manu García,Opposition Half,Complete
+264,BARvALAV,08.039,2.483,Deportivo Alavés,265,Regular Pass,Rubén Duarte,Ibai Gómez,Opposition Half,Complete
+265,BARvALAV,08.039,0.995,Deportivo Alavés,266,Regular Pass,Víctor Laguardia Cisneros,Ibai Gómez,Opposition Half,Complete
+266,BARvALAV,08.042,3.584,Barcelona,267,Regular Pass,Sergio Busquets i Burgos,Nélson Cabral Semedo,Own Half,Incomplete
+267,BARvALAV,08.046,4.113,Barcelona,268,Regular Pass,Sergio Busquets i Burgos,Samuel Yves Umtiti,Opposition Half,Incomplete
+268,BARvALAV,08.047,1.62,Barcelona,269,Recovery,Jordi Alba Ramos,Philippe Coutinho,Own Half,Incomplete
+269,BARvALAV,08.049,2.143,Deportivo Alavés,270,Recovery,Fernando Pacheco,Tomás Pina,Opposition Half,Complete
+270,BARvALAV,08.052,3.482,Deportivo Alavés,271,Kick Off,Fernando Pacheco,Fernando Pacheco,Opposition Half,Incomplete
+271,BARvALAV,08.053,1.812,Barcelona,272,Regular Pass,Ivan Rakitić,Sergi Roberto Carnicer,Own Half,Incomplete
+272,BARvALAV,08.056,3.656,Deportivo Alavés,273,Regular Pass,Burgui,Tomás Pina,Opposition Half,Complete
+273,BARvALAV,09.000,4.317,Deportivo Alavés,274,Regular Pass,Víctor Laguardia Cisneros,Tomás Pina,Opposition Half,Incomplete
+274,BARvALAV,09.001,1.367,Deportivo Alavés,275,Recovery,Manu García,Rubén Sobrino Pozuelo,Opposition Half,Complete
+275,BARvALAV,09.001,0.997,Barcelona,276,Recovery,Luis Suárez,Samuel Yves Umtiti,Opposition Half,Complete
+276,BARvALAV,09.004,3.525,Deportivo Alavés,277,Regular Pass,Ibai Gómez,Rubén Duarte,Opposition Half,Incomplete
+277,BARvALAV,09.008,4.021,Barcelona,278,Kick Off,Luis Suárez,Philippe Coutinho,Own Half,Incomplete
+278,BARvALAV,09.009,1.475,Deportivo Alavés,279,Regular Pass,Fernando Pacheco,Jonathan Rodríguez Menéndez,Opposition Half,Complete
+279,BARvALAV,09.010,1.545,Barcelona,280,Recovery,Gerard Piqué Bernabéu,Sergi Roberto Carnicer,Opposition Half,Complete
+280,BARvALAV,09.011,1.958,Deportivo Alavés,281,Recovery,Rubén Sobrino Pozuelo,Burgui,Opposition Half,Incomplete
+281,BARvALAV,09.013,2.039,Barcelona,282,Regular Pass,Ousmane Dembélé,Sergio Busquets i Burgos,Opposition Half,Incomplete
+282,BARvALAV,09.017,4.268,Barcelona,283,Recovery,Luis Suárez,Ivan Rakitić,Own Half,Incomplete
+283,BARvALAV,09.019,2.648,Deportivo Alavés,284,Recovery,Guillermo Alfonso Maripán Loaysa,Jonathan Rodríguez Menéndez,Opposition Half,Complete
+284,BARvALAV,09.020,1.887,Barcelona,285,Kick Off,Sergio Busquets i Burgos,Sergio Busquets i Burgos,Own Half,Complete
+285,BARvALAV,09.022,2.9,Barcelona,286,Kick Off,Gerard Piqué Bernabéu,Samuel Yves Umtiti,Opposition Half,Incomplete
+286,BARvALAV,09.025,3.792,Deportivo Alavés,287,Kick Off,Rubén Sobrino Pozuelo,Fernando Pacheco,Opposition Half,Complete
+287,BARvALAV,09.029,4.242,Barcelona,288,Kick Off,Gerard Piqué Bernabéu,Ivan Rakitić,Opposition Half,Incomplete
+288,BARvALAV,09.031,2.751,Deportivo Alavés,289,Recovery,Rubén Sobrino Pozuelo,Burgui,Opposition Half,Complete
+289,BARvALAV,09.031,0.67,Deportivo Alavés,290,Regular Pass,Rubén Duarte,Víctor Laguardia Cisneros,Opposition Half,Incomplete
+290,BARvALAV,09.033,2.774,Deportivo Alavés,291,Kick Off,Víctor Laguardia Cisneros,Fernando Pacheco,Opposition Half,Incomplete
+291,BARvALAV,09.034,1.74,Barcelona,292,Recovery,Sergio Busquets i Burgos,Marc-André ter Stegen,Own Half,Complete
+292,BARvALAV,09.037,3.759,Barcelona,293,Regular Pass,Sergi Roberto Carnicer,Sergio Busquets i Burgos,Own Half,Incomplete
+293,BARvALAV,09.041,4.218,Barcelona,294,Recovery,Luis Suárez,Sergi Roberto Carnicer,Own Half,Incomplete
+294,BARvALAV,09.044,3.683,Deportivo Alavés,295,Kick Off,Burgui,Víctor Laguardia Cisneros,Opposition Half,Complete
+295,BARvALAV,09.044,0.651,Deportivo Alavés,296,Kick Off,Jonathan Rodríguez Menéndez,Burgui,Opposition Half,Incomplete
+296,BARvALAV,09.045,1.683,Barcelona,297,Regular Pass,Ivan Rakitić,Samuel Yves Umtiti,Own Half,Incomplete
+297,BARvALAV,09.047,2.174,Barcelona,298,Recovery,Luis Suárez,Ousmane Dembélé,Opposition Half,Incomplete
+298,BARvALAV,09.048,1.751,Deportivo Alavés,299,Recovery,Guillermo Alfonso Maripán Loaysa,Manu García,Opposition Half,Incomplete
+299,BARvALAV,09.052,4.12,Barcelona,300,Kick Off,Jordi Alba Ramos,Ivan Rakitić,Opposition Half,Incomplete
