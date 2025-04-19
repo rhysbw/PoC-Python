@@ -6,28 +6,15 @@ This is a proof-of-concept python script that imports a given CSV file (exported
 - This will output a veiaty of statisical analysis
 
 ### Example Commands:
-#### 1) Default mapping, completed passes only, restrict to "Regular Pass"
-python poc_sportstats.py \
-  --csv example_csv_data/found_files/Football_Pass_Data_2.csv \
-  --team-a "Barcelona" \
-  --team-b "Deportivo Alavés" \
-  --completed-only \
-  --pass-type "Regular Pass" \
-  --map mapping_default.yml \
-  --ci
-#### 2) Defualt mapping, incomplete as well, all pass types
-python poc_sportstats.py \
-  --csv example_csv_data/found_files/Football_Pass_Data_2.csv \
-  --team-a "Barcelona" \
-  --team-b "Deportivo Alavés" \
-  --map mapping_default.yml \
-  --ci
+# 1)  All via arguments
+python sportstats_logic.py --csv match.csv \
+  --group-column Row \
+  --groups "Barcelona,Deportivo Alavés" \
+  --metric-column Half \
+  --metric-success "Opposition Half" \
+  --filter "Outcome=Complete" \
+  --filter "Pass Type=Regular Pass" \
+  --alpha 0.05 --ci
 
-#### 3) Pre‑cleaned dataset with minimal mapping, 99 % CI (alpha 0.01)
-python poc_sportstats.py \
-  --csv cleaned_data.csv \
-  --team-a "Team X" \
-  --team-b "Team Y" \
-  --map mapping_minimal.yml \
-  --alpha 0.01 \
-  --ci
+# 2)  Same analysis but via config file
+python sportstats_logic.py --csv match.csv --config passes_config.yml

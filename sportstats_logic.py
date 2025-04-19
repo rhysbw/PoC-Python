@@ -3,16 +3,19 @@
 SPORTSTATS‑Lite / Logic + CLI
 ========================================================
 Generic two‑proportion z‑test on any binary metric from a
-Hudl Sportscode CSV (or similar).
+Sportscode CSV (or any tabular file).
 
-Features
---------
-* Optional YAML/JSON config for repeatable analyses
-* Column mapping helper (so CSV headers can vary)
-* Unlimited include‑filters (--filter "Column=A|B")
-* Wald confidence interval (--ci)
-* Human‑readable narrative
-* Still callable as a library from Streamlit or elsewhere
+Key features
+------------
+• YAML/JSON config ( --config my_analysis.yml )  
+• Fully overridable via individual CLI flags  
+• Column mapping helper (if your CSV headers differ)  
+
+Public API  (importable by GUIs):
+    load_config
+    ColumnMapper, DEFAULT_MAPPING
+    parse_filter_string, apply_filters
+    compute_binary_metric, two_prop_z, diff_ci, narrative
 """
 
 from __future__ import annotations
@@ -30,7 +33,7 @@ import pandas as pd
 try:
     import yaml  # type: ignore
 except ModuleNotFoundError:
-    yaml = None  # YAML support becomes optional
+    yaml = None  # YAML support optional
 
 # ------------------------------------------------------------------ #
 # 1. Column mapping
@@ -40,15 +43,10 @@ DEFAULT_MAPPING: Dict[str, str] = {
     "half": "Half",
     "pass_type": "Pass Type",
     "outcome": "Outcome",
-    # These defaults are *safe* but any column can be mapped.
 }
 
 
 class ColumnMapper:
-    """
-    Maps canonical keys to actual CSV column names.
-    """
-
     KEYS = {"team", "half", "pass_type", "outcome"}
 
     def __init__(self, mapping_path: Path | None):
@@ -73,7 +71,7 @@ class ColumnMapper:
 
         self._map = mapping
 
-    def __getitem__(self, key: str) -> str:  # allows mapper["team"]
+    def __getitem__(self, key: str) -> str:
         return self._map[key]
 
 
@@ -88,11 +86,8 @@ def load_csv(path: Path) -> pd.DataFrame:
 
 
 def parse_filter_string(rule: str) -> Tuple[str, List[str]]:
-    """
-    \"Outcome=Complete|Incomplete\" → ('Outcome', ['Complete', 'Incomplete'])
-    """
     if "=" not in rule:
-        raise ValueError("Filter must be COLUMN=val1|val2")
+        raise ValueError("Filter must be COLUMN=value1|value2")
     col, val_part = rule.split("=", 1)
     values = [v.strip() for v in val_part.split("|") if v.strip()]
     if not values:
@@ -108,7 +103,7 @@ def apply_filters(df: pd.DataFrame, rules: List[Tuple[str, List[str]]]) -> pd.Da
 
 
 # ------------------------------------------------------------------ #
-# 3. Metric + stats helpers
+# 3. Metric + stats
 # ------------------------------------------------------------------ #
 def compute_binary_metric(
     df: pd.DataFrame, group_col: str, metric_col: str, success_vals: List[str]
@@ -160,29 +155,24 @@ def narrative(
     p1 = m1["success"] / m1["total"]
     p2 = m2["success"] / m2["total"]
     diff_pc = (p1 - p2) * 100
-
     direction = "more" if diff_pc > 0 else "fewer"
     diff_abs = abs(diff_pc)
-
     sig = "statistically **significant**" if p < alpha else "not statistically significant"
 
     txt = (
         f"{group_a} recorded {diff_abs:.1f} percentage‑points {direction} {metric_desc} "
         f"than {group_b}. This gap is {sig} (z = {z:.2f}, p = {p:.3f})."
     )
-
     if ci is not None:
         lo, hi = [x * 100 for x in ci]
         txt += f"  {100*(1-alpha):.0f}% CI: [{lo:+.1f} pp, {hi:+.1f} pp]."
-
-    if min(m1["total"], m2["total"]) < 30:
+    if min(m1['total'], m2['total']) < 30:
         txt += " ⚠️ Small samples; interpret cautiously."
-
     return txt
 
 
 # ------------------------------------------------------------------ #
-# 4. Config + CLI plumbing
+# 4. Config + CLI
 # ------------------------------------------------------------------ #
 def load_config(path: Path | None) -> Dict[str, Any]:
     if path is None:
@@ -196,16 +186,15 @@ def load_config(path: Path | None) -> Dict[str, Any]:
 
 
 def make_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="sportstats-lite", description="Generic two‑prop z‑test.")
+    p = argparse.ArgumentParser(description="Generic two‑proportion z‑test.")
     p.add_argument("--csv", required=True, type=Path)
-    p.add_argument("--config", type=Path, help="YAML/JSON config bundle")
+    p.add_argument("--config", type=Path, help="YAML/JSON config file")
 
-    # Overrides
     p.add_argument("--group-column")
-    p.add_argument("--groups", help="comma separated values (two)")
+    p.add_argument("--groups")
     p.add_argument("--metric-column")
     p.add_argument("--metric-success")
-    p.add_argument("--filter", action="append", default=[], metavar="RULE")
+    p.add_argument("--filter", action="append", default=[])
 
     p.add_argument("--alpha", type=float)
     p.add_argument("--ci", action="store_true")
@@ -219,34 +208,25 @@ def main(argv: List[str] | None = None) -> None:
     logging.basicConfig(level=args.log_level, format="%(levelname)s: %(message)s")
 
     cfg = load_config(args.config)
-
-    def get(key: str, default=None):
+    def cfg_or_flag(key: str, default=None):
         return getattr(args, key) if getattr(args, key) not in (None, [], "") else cfg.get(key, default)
 
     mapper = ColumnMapper(args.map)
 
-    # ----- Required user decisions -----
-    group_col = get("group_column", mapper["team"])
-    metric_col = get("metric_column", mapper["half"])
-    success_vals = [v.strip() for v in get("metric_success", "Opposition Half").split(",")]
+    group_col = cfg_or_flag("group_column", mapper["team"])
+    metric_col = cfg_or_flag("metric_column", mapper["half"])
+    success_vals = [v.strip() for v in cfg_or_flag("metric_success", "Opposition Half").split(",")]
 
-    groups = [g.strip() for g in get("groups", "").split(",") if g.strip()]
+    groups = [g.strip() for g in cfg_or_flag("groups", "").split(",") if g.strip()]
     if len(groups) != 2:
-        logging.error("You must provide exactly two group values via --groups or config.")
+        logging.error("Need exactly two group values via --groups or config.")
         sys.exit(1)
     group_a, group_b = groups
 
-    alpha = float(get("alpha", 0.05))
-    want_ci = get("ci", False)
+    alpha = float(cfg_or_flag("alpha", 0.05))
+    want_ci = bool(cfg_or_flag("ci", False))
 
-    # ----- Load & filter -----
     df_raw = load_csv(args.csv)
-    required_cols = {group_col, metric_col}
-    required_cols.update({c for c, _ in (parse_filter_string(f) for f in args.filter)})
-    if missing := required_cols - set(df_raw.columns):
-        logging.error("CSV missing required columns: %s", ", ".join(sorted(missing)))
-        sys.exit(1)
-
     df = apply_filters(df_raw, [parse_filter_string(f) for f in args.filter])
 
     metrics = compute_binary_metric(df, group_col, metric_col, success_vals)

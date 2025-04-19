@@ -1,0 +1,12 @@
+group_column: Row
+groups: ["Barcelona", "Deportivo Alavés"]
+
+metric_column: Half
+metric_success: "Opposition Half"
+
+filters:
+  - Outcome=Complete
+  - Pass Type=Regular Pass
+
+alpha: 0.05
+ci: true
