@@ -17,7 +17,7 @@ import streamlit as st
 from sportstats_logic import (
     apply_filters, compute_binary_metric, compute_lag_sequential,
     diff_ci, prop_narrative, parse_filter_string, two_prop_z, lag_narrative,
-    suggest_hypotheses
+    suggest_hypotheses, llm_explanation
 )
 
 st.set_page_config(page_title="SPORTSTATS-Lite Wizard", page_icon="⚽", layout="wide")
@@ -121,19 +121,48 @@ if df_filt.empty:
 
 # -------------- 5. Run analysis ----------------------------------------
 st.header("Results")
+
 if test_type == "Proportion":
     met = compute_binary_metric(df_filt, group_col, metric_col, success_vals)
     m1, m2 = met[group_a], met[group_b]
     z, p = two_prop_z(m1["success"], m1["total"], m2["success"], m2["total"])
     ci = diff_ci(m1["success"], m1["total"], m2["success"], m2["total"], alpha) if show_ci else None
-    st.metric(f"{group_a} successes", f"{m1['success']} / {m1['total']}")
-    st.metric(f"{group_b} successes", f"{m2['success']} / {m2['total']}")
-    st.markdown(prop_narrative(group_a, group_b, m1, m2, z, p, alpha, ci,
-                          metric_desc=f"{metric_col} ∈ {success_vals}"))
-else:
-    stats = compute_lag_sequential(df_filt, group_col, metric_col, success_vals)
-    st.markdown(lag_narrative(group_a, stats[group_a], alpha))
-    st.markdown(lag_narrative(group_b, stats[group_b], alpha))
 
-with st.expander("Filtered data"):
+    # quick metric cards
+    st.metric(group_a, f"{m1['success']} / {m1['total']}")
+    st.metric(group_b, f"{m2['success']} / {m2['total']}")
+
+    baseline = prop_narrative(
+        group_a, group_b, m1, m2, z, p, alpha, ci,
+        metric_desc=f"{metric_col} ∈ {success_vals}"
+    )
+    st.markdown(baseline)
+    if st.button("AI Analyse"):
+        with st.spinner("Generating AI analysis..."):
+            enhanced = llm_explanation(baseline, df_filt)
+        st.markdown(enhanced)
+
+    # -------------- 6. Show filtered data ----------------------------------
+    st.header("Filtered data")
     st.dataframe(df_filt, use_container_width=True)
+
+
+else:  # Lag‑sequential
+    stats = compute_lag_sequential(df_filt, group_col, metric_col, success_vals)
+    baseline = (
+        lag_narrative(group_a, stats[group_a], alpha,
+                      metric_desc=f"{metric_col} ∈ {success_vals}")
+        + "\n\n" +
+        lag_narrative(group_b, stats[group_b], alpha,
+                      metric_desc=f"{metric_col} ∈ {success_vals}")
+    )
+    st.markdown(baseline)
+
+    if st.button("AI Analyse"):
+        with st.spinner("Generating AI analysis..."):
+            enhanced = llm_explanation(baseline, df_filt)
+        st.markdown(enhanced)
+
+# -------------- 6. Show filtered data ----------------------------------
+st.header("Filtered data")
+st.dataframe(df_filt, use_container_width=True)

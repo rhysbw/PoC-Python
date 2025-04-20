@@ -362,6 +362,66 @@ def load_config(path: Path | None) -> Dict[str, Any]:
     return json.loads(txt)
 
 
+# ------------------------------------------------------------------ #
+#  LLM enhancer (GroqCloud, hard‑coded)                              #
+# ------------------------------------------------------------------ #
+_GROQ_API_KEY = "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"
+_GROQ_MODEL   = "llama3-70b-8192"   # high‑quality production model
+
+import requests, textwrap
+
+def llm_explanation(summary_text: str, df: pd.DataFrame, rows: int = 12) -> str:
+    """
+    Send rule‑based summary + a small data sample to GroqCloud and return an
+    expert‑level interpretation.  Falls back to summary_text on any error.
+    """
+    prompt = textwrap.dedent(
+        f"""
+        You are a analytics explainer helping novices understand statistical test results.
+        You should analyse the data first to figure out what it means, and what is being recorded in it.
+        You should also explain in plain language what the statistical test results mean, and how they relate to the data.
+        You should ensure you fully understand the data before you start writing.
+        ### STATISTICAL SUMMARY
+        {summary_text}
+
+        ### FIRST {rows} ROWS OF THE DATASET
+        {df.head(rows).to_csv(index=False)}
+
+        Please write **2 – 4 short sentences** that:
+
+        1. State, in plain language, which group if there is a group had better/different from the other and by roughly how much, what does this mean (use “percentage points” for “pp”).
+        2. Explain what the statistical decision means (e.g., “rejecting the null hypothesis means the difference is unlikely to be due to chance at the 5 % level”).
+        3. Mention the confidence‑interval range in everyday words (e.g., “we’re 95 % sure the true gap lies between X and Y percentage points”).
+        4. Avoid jargon, equations, or code; aim for a clear, beginner‑friendly explanation.
+
+        Return **only the final explanation paragraph (2–4 sentences)** and nothing else.
+        Make sure you dont include vauge statemnts like "This could have implications for how they approach the game and their overall strategy." but instead focus on the specific implications of the results.
+        """
+    )
+
+    try:
+        resp = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {_GROQ_API_KEY}",
+            },
+            json={
+                "model": _GROQ_MODEL,
+                "messages": [{"role": "user", "content": prompt}],
+                "max_tokens": 5000,
+                "temperature": 0.5,
+            },
+            timeout=15,
+        )
+        resp.raise_for_status()
+        return resp.json()["choices"][0]["message"]["content"].strip()
+    except Exception as exc:
+        logging.warning("LLM explanation failed (%s); using baseline.", exc)
+        return 'Error: LLM explanation failed. Contact the team. ' \
+
+
+
 def make_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="Two-proportion or Lag-sequential test.")
     p.add_argument("--csv", required=True, type=Path)
@@ -401,17 +461,29 @@ def main(argv: List[str] | None = None) -> None:
     if args.test == "prop":
         met = compute_binary_metric(df, group_col, metric_col, success_vals)
         z, p = two_prop_z(met[group_a]["success"], met[group_a]["total"],
-                          met[group_b]["success"], met[group_b]["total"])
+                            met[group_b]["success"], met[group_b]["total"])
         ci = diff_ci(met[group_a]["success"], met[group_a]["total"],
-                     met[group_b]["success"], met[group_b]["total"], alpha) if args.ci else None
-        print(prop_narrative(group_a, group_b, met[group_a], met[group_b], z, p, alpha, ci,
-                        metric_desc=f"{metric_col}∈{success_vals}"))
+                        met[group_b]["success"], met[group_b]["total"], alpha) if args.ci else None
+
+        summary = prop_narrative(
+            group_a, group_b,
+            met[group_a], met[group_b],
+            z, p, alpha, ci,
+            metric_desc=f"{metric_col} ∈ {success_vals}"
+        )
+        summary = llm_explanation(summary, df)   # <‑‑ upgraded line
+        print(summary)
     elif args.test == "lag":
         stats = compute_lag_sequential(df, group_col, metric_col, success_vals)
-        print(lag_narrative(group_a, stats[group_a], alpha,
-                            metric_desc=f"{metric_col} ∈ {success_vals}"))
-        print(lag_narrative(group_b, stats[group_b], alpha,
-                            metric_desc=f"{metric_col} ∈ {success_vals}"))
+        summary = (
+            lag_narrative(group_a, stats[group_a], alpha,
+                          metric_desc=f"{metric_col} ∈ {success_vals}")
+            + "\n\n" +
+            lag_narrative(group_b, stats[group_b], alpha,
+                          metric_desc=f"{metric_col} ∈ {success_vals}")
+        )
+        summary = llm_explanation(summary, df)   # <‑‑ upgraded line
+        print(summary)
 
 
 
